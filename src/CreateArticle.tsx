@@ -20,5 +20,5 @@ import React, { ReactElement } from 'react';
  */
 
 export default (): ReactElement => (
-    <p>Welcome to the Create Aricle Page !!!</p>
+	<p>Welcome to the Create Aricle Page !!!</p>
 );

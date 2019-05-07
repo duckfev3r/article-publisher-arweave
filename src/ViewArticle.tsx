@@ -8,9 +8,9 @@ import React, { ReactElement } from 'react';
  * View an article
  * See related Articles
  * Upvote an article (costs money)
- * 
+ *
  */
 
 export default (): ReactElement => (
-    <p>Welcome to the Create Aricle Page !!!</p>
+	<p>Welcome to the Create Aricle Page !!!</p>
 );

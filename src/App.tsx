@@ -24,7 +24,7 @@ import React, { ReactElement } from 'react';
  */
 
 export default (): ReactElement => (
-    <p>This is the MAIN PAGE... What will we keep here ? <br /><br />
-        Don't know is the simple answer !!!!
+	<p>This is the MAIN PAGE... What will we keep here ? <br /><br />
+		Don't know is the simple answer !!!!
     </p>
 );

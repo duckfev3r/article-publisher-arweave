@@ -10,6 +10,17 @@ import React, { ReactElement } from 'react';
  * 3 - List of Articles.
  *
  * 1 - Create Article
+ *
+ * TO-DO
+ *
+ * - Infrastructure
+ *
+ * LocalStorage Service.
+ * API Service
+ * Article Processing Service
+ * Routing
+ *
+ * Redux
  */
 
 export default (): ReactElement => (

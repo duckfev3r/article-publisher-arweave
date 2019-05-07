@@ -19,6 +19,22 @@ import React, { ReactElement } from 'react';
  * Author ?
  */
 
+export interface IComposeArticle {
+	title: string,
+	tagline: string,
+	featuredImg: IArticleImg,
+	tags: string[],
+	content: string,
+	uniqueId: string
+}
+
+export interface IArticleImg {
+	title: string,
+	alt: string,
+	url: string
+}
+
+
 export default (): ReactElement => (
 	<h1>Create Article</h1>
 );

@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 import CreateArticle from './CreateArticle';
 import ViewArticle from './ViewArticle';
 import ArticleIndex from './ArticleIndex';
+import NotFound from './notfound';
 
 
 /**
@@ -56,9 +57,13 @@ function AppRouter() {
 						</li>
 					</ul>
 				</nav>
-				<Route path="/" exact component={ArticleIndex} />
-				<Route path="/create" component={CreateArticle} />
-				<Route path="/view" component={ViewArticle} />
+				<Switch>
+					<Route exact path="/" component={ArticleIndex} />
+					<Route path="/create" component={CreateArticle} />
+					<Route path="/view" component={ViewArticle} />
+					<Route component={NotFound} />
+				</Switch>
+
 			</div>
 		</Router>
 	);

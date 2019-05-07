@@ -1,4 +1,10 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
+
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import CreateArticle from './CreateArticle';
+import ViewArticle from './ViewArticle';
+import ArticleIndex from './ArticleIndex';
+
 
 /**
  * Medium Type Application
@@ -23,8 +29,39 @@ import React, { ReactElement } from 'react';
  * Redux
  */
 
-export default (): ReactElement => (
-	<p>This is the MAIN PAGE... What will we keep here ? <br /><br />
-		Don't know is the simple answer !!!!
-    </p>
-);
+// const AppRouter = (
+// 	<Router>
+// 		<div>
+// 			<Route path="/" component={App} />
+// 			<Route path="/create" component={CreateArticle} />
+// 			<Route path="/view" component={ViewArticle} />
+// 			<Route path="/index" component={ArticleIndex} />
+// 		</div>
+// 	</Router>
+// )
+function AppRouter() {
+	return (
+		<Router>
+			<div>
+				<nav>
+					<ul>
+						<li>
+							<Link to="/">Index</Link>
+						</li>
+						<li>
+							<Link to="/create">Create Article</Link>
+						</li>
+						<li>
+							<Link to="/view">View Article</Link>
+						</li>
+					</ul>
+				</nav>
+				<Route path="/" exact component={ArticleIndex} />
+				<Route path="/create" component={CreateArticle} />
+				<Route path="/view" component={ViewArticle} />
+			</div>
+		</Router>
+	);
+}
+
+export default AppRouter

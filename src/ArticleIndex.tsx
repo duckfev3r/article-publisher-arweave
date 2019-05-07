@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 /**
  * Article Index
@@ -8,6 +8,14 @@ import React, { ReactElement } from 'react';
  * See a list of all published Articles
  */
 
-export default (): ReactElement => (
-	<p>Welcome to the Create Aricle Page !!!</p>
-);
+class ArticleIndex extends React.Component {
+	render() {
+		return (
+			<h1>
+				Article Index
+			</h1>
+			)
+	}
+}
+export default ArticleIndex
+

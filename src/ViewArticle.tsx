@@ -12,5 +12,5 @@ import React, { ReactElement } from 'react';
  */
 
 export default (): ReactElement => (
-	<p>Welcome to the Create Aricle Page !!!</p>
+	<h1>View Article</h1>
 );

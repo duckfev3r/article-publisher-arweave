@@ -5,12 +5,9 @@ import { Route, Link, MemoryRouter as Router, Switch, Redirect } from 'react-rou
 
 import './main.css';
 
-import App from './App';
 import CreateArticle from './CreateArticle'
 import ViewArticle from './ViewArticle'
 import ArticleIndex from './ArticleIndex'
-import NotFound from './notfound';
-import { createBrowserHistory } from 'history';
 
 const routing = (
 	<Router>
@@ -32,12 +29,10 @@ const routing = (
 				<Route exact path="/" component={ArticleIndex} />
 				<Route path="/create" component={CreateArticle} />
 				<Route path="/view" component={ViewArticle} />
-				<Route path="/notfound" component={NotFound} />
 			</Switch>
 		</div>
 	</Router>
 )
-
 
 
 ReactDOM.render(routing, document.getElementById('main'));

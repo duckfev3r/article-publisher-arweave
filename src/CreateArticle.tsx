@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 
 import ReactQuill from 'react-quill'; // Typescript
 import 'react-quill/dist/quill.snow.css';
+
+import './main.css'
 /**
  * Create Article
  *
@@ -43,9 +45,15 @@ const modules = {
 	toolbar: [
 		[{ 'header': [1, 2, 3, false] }],
 		['bold', 'italic', 'underline', 'strike', 'blockquote'],
-		[{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-		['link', 'image'],
+		[{ 'list': 'ordered' }, { 'list': 'bullet' },
+			// { 'indent': '-1' }, { 'indent': '+1' }
+		],
+		[
+			// 'link',
+			'image'
+		],
 		[{ 'align': [] }],
+		['code-block'],
 		['clean']                                         // remove formatting button
 	],
 }
@@ -53,8 +61,9 @@ const modules = {
 const formats = [
 	'header',
 	'bold', 'italic', 'underline', 'strike', 'blockquote',
-	'list', 'bullet', 'indent',
-	'link', 'image', 'align'
+	'list', 'bullet',
+	// 'indent',
+	'link', 'image', 'align', 'code-block'
 ]
 
 class CreateArticle extends React.Component<Props, State> {
@@ -72,7 +81,7 @@ class CreateArticle extends React.Component<Props, State> {
 	render() {
 		return (
 			<ReactQuill
-				// theme="snow"
+				// theme="bubble"
 				value={this.state.text}
 				onChange={this.handleChange}
 				modules={modules}

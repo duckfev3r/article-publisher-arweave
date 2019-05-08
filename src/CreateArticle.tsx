@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 
+import ReactQuill from 'react-quill'; // Typescript
+import 'react-quill/dist/quill.snow.css';
 /**
  * Create Article
  *
@@ -34,7 +36,50 @@ export interface IArticleImg {
 	url: string
 }
 
+type Props = { text: string };
+type State = { text: string };
 
-export default (): ReactElement => (
-	<h1>Create Article</h1>
-);
+const modules = {
+	toolbar: [
+		[{ 'header': [1, 2, 3, false] }],
+		['bold', 'italic', 'underline', 'strike', 'blockquote'],
+		[{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+		['link', 'image'],
+		[{ 'align': [] }],
+		['clean']                                         // remove formatting button
+	],
+}
+
+const formats = [
+	'header',
+	'bold', 'italic', 'underline', 'strike', 'blockquote',
+	'list', 'bullet', 'indent',
+	'link', 'image', 'align'
+]
+
+class CreateArticle extends React.Component<Props, State> {
+	constructor(props: Props) {
+		super(props)
+		this.state = { text: '' } // You can also pass a Quill Delta here
+		this.handleChange = this.handleChange.bind(this)
+	}
+
+	handleChange(value: any) {
+		console.log(value)
+		this.setState({ text: value })
+	}
+
+	render() {
+		return (
+			<ReactQuill
+				// theme="snow"
+				value={this.state.text}
+				onChange={this.handleChange}
+				modules={modules}
+				formats={formats}
+			/>
+		)
+	}
+}
+
+export default CreateArticle

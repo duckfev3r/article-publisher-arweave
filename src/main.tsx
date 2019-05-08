@@ -26,8 +26,8 @@ const routing = (
 				</ul>
 			</nav>
 			<Switch>
-				<Route exact path="/" component={ArticleIndex} />
-				<Route path="/create" component={CreateArticle} />
+				<Route exact path="/" component={CreateArticle} />
+				<Route path="/create" component={ArticleIndex} />
 				<Route path="/view" component={ViewArticle} />
 			</Switch>
 		</div>

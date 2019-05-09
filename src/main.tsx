@@ -5,26 +5,18 @@ import { Route, Link, MemoryRouter as Router, Switch, Redirect } from 'react-rou
 
 import './main.css';
 
-import CreateArticle from './CreateArticle'
-import ViewArticle from './ViewArticle'
-import ArticleIndex from './ArticleIndex'
+import navLinks from './components/navigation/navLinks'
+
+import CreateArticle from './containers/CreateArticle'
+import ViewArticle from './containers/ViewArticle'
+import ArticleIndex from './containers/ArticleIndex'
+import Header from './components/navigation/Header';
+
 
 const routing = (
 	<Router>
 		<div>
-			<nav>
-				<ul>
-					<li>
-						<Link to="/">Index</Link>
-					</li>
-					<li>
-						<Link to="/create">Create Article</Link>
-					</li>
-					<li>
-						<Link to="/view">View Article</Link>
-					</li>
-				</ul>
-			</nav>
+			<Header navLinks={navLinks}/>
 			<Switch>
 				<Route exact path="/" component={CreateArticle} />
 				<Route path="/create" component={ArticleIndex} />

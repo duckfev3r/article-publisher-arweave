@@ -1,0 +1,18 @@
+.header-container {
+	height : 70px;
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	background-color: #393E46;
+}
+
+.header-title {
+	color: #F9FAFA;
+	font-size: 2em;
+}
+
+.header-image {
+	height : 50px;
+	width: 50px;
+	margin: 10px;
+}

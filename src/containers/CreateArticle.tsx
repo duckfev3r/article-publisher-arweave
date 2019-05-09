@@ -1,9 +1,10 @@
 import React, { ReactElement } from 'react';
 
 import ReactQuill from 'react-quill'; // Typescript
-import 'react-quill/dist/quill.bubble.css';
+import 'react-quill/dist/quill.snow.css';
+// import 'react-quill/dist/quill.bubble.css';
 
-import './main.css'
+import '../main.css'
 /**
  * Create Article
  *
@@ -22,24 +23,6 @@ import './main.css'
  * Related ?
  * Author ?
  */
-
-export interface IComposeArticle {
-	title: string,
-	tagline: string,
-	featuredImg: IArticleImg,
-	tags: string[],
-	content: string,
-	uniqueId: string
-}
-
-export interface IArticleImg {
-	title: string,
-	alt: string,
-	url: string
-}
-
-type Props = { text: string };
-type State = { text: string };
 
 const modules = {
 	toolbar: [
@@ -66,6 +49,9 @@ const formats = [
 	'link', 'image', 'align', 'code-block'
 ]
 
+type Props = { text: string };
+type State = { text: string };
+
 class CreateArticle extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props)
@@ -81,7 +67,7 @@ class CreateArticle extends React.Component<Props, State> {
 	render() {
 		return (
 			<ReactQuill
-				theme="bubble"
+				theme="snow"
 				value={this.state.text}
 				onChange={this.handleChange}
 				modules={modules}

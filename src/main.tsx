@@ -16,11 +16,17 @@ import Header from './components/navigation/Header';
 const routing = (
 	<Router>
 		<div>
-			<Header navLinks={navLinks}/>
+			<Header navLinks={navLinks} />
 			<Switch>
-				<Route exact path="/" component={CreateArticle} />
-				<Route path="/create" component={ArticleIndex} />
-				<Route path="/view" component={ViewArticle} />
+				{navLinks.map((link, index) => {
+					return (
+						link.link === '/' ?
+							<Route exact path={link.link} component={link.component} />
+							:
+							<Route path={link.link} component={link.component} />
+					)
+				})
+				}
 			</Switch>
 		</div>
 	</Router>

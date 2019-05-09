@@ -1,7 +1,9 @@
+import { RouteComponentProps } from "react-router-dom";
+
 export default interface INavLink {
 	link: string
 	title: string
-	component: {}
+	component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 	id: number
 }
 

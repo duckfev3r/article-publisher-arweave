@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import ReactQuill from 'react-quill'; // Typescript
-import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
 
 import './main.css'
 /**
@@ -81,7 +81,7 @@ class CreateArticle extends React.Component<Props, State> {
 	render() {
 		return (
 			<ReactQuill
-				// theme="bubble"
+				theme="bubble"
 				value={this.state.text}
 				onChange={this.handleChange}
 				modules={modules}

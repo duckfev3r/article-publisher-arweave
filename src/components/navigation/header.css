@@ -6,6 +6,14 @@
 	background-color: #393E46;
 }
 
+.link {
+	margin: 20px;
+}
+
+.link a {
+	color: white
+}
+
 .header-title {
 	color: #F9FAFA;
 	font-size: 2em;

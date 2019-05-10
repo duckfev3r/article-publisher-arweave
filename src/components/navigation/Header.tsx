@@ -1,24 +1,15 @@
 import React from 'react';
-import logo from '../../assets/img/scribe-logo-only-bg-removed.png'
 
 import './header.css'
-import AppBar from '@material-ui/core/AppBar';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Hidden from '@material-ui/core/Hidden';
-import Toolbar from '@material-ui/core/Toolbar';
-import Icon from '@material-ui/core/Icon/Icon';
+
 import { Link } from 'react-router-dom';
 import INavLink from '../../types/types';
 
+const logo = require('../../assets/img/scribe-logo-only-bg-removed.png')
+
 type Props = { navLinks: INavLink[] };
 
-
-const Header = ({navLinks}: Props) => {
-
-    console.log(navLinks)
-
+const Header = ({ navLinks }: Props) => {
     return (
         <div className='header-container'>
             <div>
@@ -38,7 +29,6 @@ const Header = ({navLinks}: Props) => {
                 })
             }
         </div>
-
     );
 }
 

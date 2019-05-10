@@ -6,19 +6,19 @@ import ViewArticle from "../../containers/ViewArticle";
 const navLinks: INavLink[] = [
 	{
 		link: '/',
-		title: 'Explore',
-		component: ArticleIndex,
-		id: 1
-	},
-	{
-		link: '/create',
 		title: 'Create',
 		component: CreateArticle,
 		id: 2
 	},
 	{
+		link: '/explore',
+		title: 'Explore',
+		component: ArticleIndex,
+		id: 1
+	},
+	{
 		link: 'view',
-		title: 'View Article',
+		title: 'View',
 		component: ViewArticle,
 		id: 3
 	}

@@ -3,6 +3,34 @@ body {
 	margin: 0px;
 }
 
+.page {
+	margin: 0 auto;
+	/* margin-top: 15px; */
+	padding: 15px;
+	max-width: 750px;
+}
+
+.quill {
+	margin-top: 10px;
+	/* max-width: 750px; */
+}
+
+.ql-toolbar {
+	border-top-left-radius: 4px !important;
+	border-top-right-radius: 4px !important;
+}
+
+.ql-container {
+	border-bottom-left-radius: 4px !important;
+	border-bottom-right-radius: 4px !important;
+}
+
+.ql-editor {
+	/* margin: 5px; */
+	min-height: 550px;
+	max-height: 550px !important;
+}
+
 .ql-editor>h1, .ql-editor>p {
 	font-family: Georgia, 'Times New Roman', Times, serif
 }
@@ -16,20 +44,45 @@ body {
 }
 
 .ql-editor>h2 {
-	font-size: 2.5em !important;
+	/* color: grey; */
+	font-size: 2.1em !important;
+	line-height: 1.2;
 }
 
 .ql-editor>h3 {
-	font-size: 2em !important;
-}
-
-.ql-editor>h4 {
-	font-size: 1.8em !important;
+	font-size: 1.6em !important;
+	line-height: 1.7;
 }
 
 .ql-editor>p {
-	font-size: 1.7em;
+	/* padding: 0px 10px 0px 10px !important; */
+	font-size: 1.6em;
 	line-height: 1.58;
-	letter-spacing: -.003em;
 	font-weight: 400
+}
+
+.button {
+	margin: 3px,
+}
+
+.leftIcon {
+	margin-right: 5px,
+}
+
+.rightIcon {
+	margin-left: 5px
+}
+
+.iconSmall {
+	font-size: 20,
+}
+
+.article-create-title-input {
+	margin-bottom : 5px !important;
+	width: 100%;
+	max-width: 750px;
+}
+
+input:-internal-autofill-selected {
+	background-color: none !important;
 }

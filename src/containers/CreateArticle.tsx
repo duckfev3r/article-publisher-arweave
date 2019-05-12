@@ -11,6 +11,12 @@ import CreateArticleButtons from '../components/CreateArticleButtons';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import KeyUploadComponent from '../components/KeyUploadComponent';
 import ArticleForm from '../components/ArticleForm';
+
+import { Button } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
+
+import Keystore from '../keystore'
+
 /**
  * Create Article
  *
@@ -55,6 +61,15 @@ class CreateArticle extends React.Component<Props, State> {
 		this.handleContentChange = this.handleContentChange.bind(this)
 		this.handleKeystoreChange = this.handleKeystoreChange.bind(this)
 		this.testTxn = this.testTxn.bind(this)
+		this.lookupTestTxn = this.lookupTestTxn.bind(this)
+	}
+
+	componentDidMount() {
+		this.setState({
+			keystore: Keystore
+		})
+
+		console.log(Keystore)
 	}
 
 	private handleContentChange(value: any) {
@@ -69,13 +84,18 @@ class CreateArticle extends React.Component<Props, State> {
 			this.setState({
 				keystore: JSON.parse(content)
 			})
-			this.testTxn(JSON.parse(content))
+			console.log(content)
+			// this.testTxn(JSON.parse(content))
 		}
 		fileReader.readAsText(file)
 	}
 
-	async testTxn(keystore) {
+	async testTxn(keystore: any) {
 		this.api.testTxn(keystore)
+	}
+
+	async lookupTestTxn() {
+		this.api.searchTestTxn()
 	}
 
 	render() {
@@ -93,6 +113,9 @@ class CreateArticle extends React.Component<Props, State> {
 						</div>
 
 				}
+            <Button onClick={this.lookupTestTxn} size="small" className="button" variant="outlined">
+                <SaveIcon/>
+            </Button>
 			</div>
 		)
 	}

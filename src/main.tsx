@@ -16,8 +16,8 @@ const routing = (
 					navLinks.map((link, index) => {
 						return (
 							link.link === '/' ?
-								<Route exact path={link.link} component={link.component} /> :
-								<Route path={link.link} component={link.component} />
+								<Route exact path={link.link} key={link.link} component={link.component} /> :
+								<Route path={link.link} key={link.link} component={link.component} />
 						)
 					})
 				}

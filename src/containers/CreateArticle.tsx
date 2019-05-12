@@ -68,7 +68,6 @@ class CreateArticle extends React.Component<Props, State> {
 		this.setState({
 			keystore: Keystore
 		})
-
 		console.log(Keystore)
 	}
 

@@ -33,6 +33,7 @@ type State = {
 	sendDialogueOpen: boolean
 	invalidField: IInvalidField
 	invalidFieldOpen: boolean
+	tagField: string
 };
 
 class CreateArticle extends React.Component<Props, State> {
@@ -59,8 +60,9 @@ class CreateArticle extends React.Component<Props, State> {
 				body: '',
 			},
 			invalidFieldOpen: false,
+			sendDialogueOpen: false,
+			tagField: '',
 			keystore: '',
-			sendDialogueOpen: false
 		}
 
 		this.api = new ApiService
@@ -85,6 +87,7 @@ class CreateArticle extends React.Component<Props, State> {
 		this.toggleInvalidFieldDialogue = this.toggleInvalidFieldDialogue.bind(this)
 		this.handleTitleChange = this.handleTitleChange.bind(this)
 		this.removeTag = this.removeTag.bind(this)
+		this.updateTagField = this.updateTagField.bind(this)
 	}
 
 	handleContentChange(html: any) {
@@ -192,21 +195,27 @@ class CreateArticle extends React.Component<Props, State> {
 		})
 	}
 
-	addTag(e: any) {
-		const meta = this.state.meta
-		meta.tags.push('tagdfdfhfhf')
-		this.setState({
-			meta
-		})
+	updateTagField(tag: string) {
+		if (this.state.meta.tags.length < 10) {
+			const meta = this.state.meta
+			meta.tags.push(tag)
+			this.setState({
+				meta
+			})
+		}
 	}
 
-	removeTag(index: number){
-		const meta = this.state.meta
-		meta.tags = meta.tags.splice(1, index)
-		this.setState({
-			meta
-		})
-		console.log(meta)
+	removeTag(tag: string){
+		console.log(tag)
+		const tags = this.state.meta.tags
+		const index = tags.indexOf(tag)
+		if (index > -1) {
+			const meta = this.state.meta
+			meta.tags.splice(index, 1)
+			this.setState({
+				meta
+			})
+		}
 	}
 
 	render() {
@@ -219,15 +228,17 @@ class CreateArticle extends React.Component<Props, State> {
 						<KeyUploadComponent callback={this.handleKeystoreChange} />
 						:
 						<div>
+							<ConfirmSendDialogue
+								open={this.state.sendDialogueOpen}
+								cancel={this.sendDialogueCancel}
+								confirm={this.sendDialogueConfirm}
+							/>
+
 							<ArticleForm
 								titleChange={this.handleTitleChange}
 								callback={this.handleContentChange}
 								editorCallback={this.bindQuillEditor.bind(this)}
 								body={this.state.content.body}
-							/>
-
-							<CreateArticleButtons
-								handleClickOpen={this.sendClicked}
 							/>
 
 							<InvalidFieldDialogue
@@ -237,7 +248,8 @@ class CreateArticle extends React.Component<Props, State> {
 							/>
 
 							<AddTagsComponent
-								callback={this.addTag}
+								value={this.state.tagField}
+								callback={this.updateTagField}
 							/>
 
 							<TagsListComponent
@@ -245,16 +257,11 @@ class CreateArticle extends React.Component<Props, State> {
 								handleDelete={this.removeTag}
 							/>
 
-							<ConfirmSendDialogue
-								open={this.state.sendDialogueOpen}
-								cancel={this.sendDialogueCancel}
-								confirm={this.sendDialogueConfirm}
+							<CreateArticleButtons
+								handleClickOpen={this.sendClicked}
 							/>
 						</div>
 				}
-				<Button onClick={this.addTag.bind(this)} size="small" className="button" variant="outlined">
-                <SaveIcon/>
-            </Button>
 			</div>
 		)
 	}

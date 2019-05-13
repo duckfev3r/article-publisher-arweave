@@ -5,8 +5,6 @@ import CreateArticleStyles from '../containers/CreateArticleStyles'
 import { withStyles } from '@material-ui/core';
 import ReactQuill from 'react-quill';
 
-// import { debounce } from 'throttle-debounce'
-
 const modules: any = {
     toolbar: [
         [{ 'header': [1, 2, 3, false] }],

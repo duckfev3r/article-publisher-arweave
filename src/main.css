@@ -83,6 +83,20 @@ body {
 	max-width: 750px;
 }
 
+.tags-list-container {
+	min-height: 50px;
+}
+.add-tags-component-container {
+	min-width: 100%
+}
+
+.add-tags-component-input {
+	min-width: 100%
+}
+
+.tag-chip {
+	margin: 5px;
+}
 input:-internal-autofill-selected {
 	background-color: none !important;
 }

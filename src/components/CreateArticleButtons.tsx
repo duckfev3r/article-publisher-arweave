@@ -9,9 +9,9 @@ const CreateArticleButtons = () => {
     return (
         <div className="create-article-button-container">
             <SendButton />
-            <Button size="small" className="button" variant="outlined">
+            {/* <Button size="small" className="button" variant="outlined">
                 <SaveIcon/>
-            </Button>
+            </Button> */}
         </div>
     )
 }

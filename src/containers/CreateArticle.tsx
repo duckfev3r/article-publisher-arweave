@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 // import 'react-quill/dist/quill.bubble.css';
 
 import ApiService from '../services/ApiService'
+import PublishingService from '../services/PublishingService'
 
 import '../main.css'
 import CreateArticleStyles from './CreateArticleStyles'
@@ -41,22 +42,24 @@ type State = {
 	title: string
 	body: string
 	keystore: any
+	synopsis: string
 };
 
 class CreateArticle extends React.Component<Props, State> {
 	api: ApiService
+	publishing: PublishingService
 	constructor(props: Props) {
 		super(props)
 
 		this.state = {
 			title: '',
 			body: '',
-			keystore: ''
+			keystore: '',
+			synopsis: ''
 		}
 
 		this.api = new ApiService
-
-		this.api.checkStatus()
+		this.publishing = new PublishingService
 
 		this.handleContentChange = this.handleContentChange.bind(this)
 		this.handleKeystoreChange = this.handleKeystoreChange.bind(this)
@@ -68,11 +71,15 @@ class CreateArticle extends React.Component<Props, State> {
 		this.setState({
 			keystore: Keystore
 		})
-		console.log(Keystore)
 	}
 
-	private handleContentChange(value: any) {
-		this.setState({ body: value })
+	private handleContentChange(html: any, text: any) {
+		this.setState({
+			body: html,
+			synopsis: this.publishing.createSynopsis(text)
+		}, ()=> {
+			console.log(this.state)
+		})
 	}
 
 	private async handleKeystoreChange(value: any) {
@@ -110,11 +117,10 @@ class CreateArticle extends React.Component<Props, State> {
 							<ArticleForm callback={this.handleContentChange} body={this.state.body} />
 							<CreateArticleButtons />
 						</div>
-
 				}
-            <Button onClick={this.lookupTestTxn} size="small" className="button" variant="outlined">
+				{/* <Button onClick={this.lookupTestTxn} size="small" className="button" variant="outlined">
                 <SaveIcon/>
-            </Button>
+            </Button> */}
 			</div>
 		)
 	}

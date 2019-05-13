@@ -21,46 +21,42 @@ export default class ApiService {
 		tx.addTag('App-Name', 'scribe')
 		tx.addTag('App-Version', '0.0.0')
 		tx.addTag('Unix-Time', this.getTime())
-
 		return tx
 	}
 
-	public async postArticle(content: any, wallet: any, connection: any = arweave) {
-		let tx = await connection.createTransaction({
+	public async postArticle(content: any, wallet: any, awv: any = arweave) {
+		let tx = await awv.createTransaction({
 			data: content
 		}, wallet)
 
 		tx = this.addTags(tx, content.tags)
 
-		await connection.transactions.sign(tx, wallet)
+		await awv.transactions.sign(tx, wallet)
 		console.log(tx)
-		await connection.transactions.post(tx)
+		await awv.transactions.post(tx)
 		console.log('article published !')
-
 	}
 
-	public async testTxn(wallet: any, connection: any = arweave) {
+	public async testTxn(wallet: any, awv: any = arweave) {
 		const content = 'this is a test'
-		const tx = await connection.createTransaction({
+		const tx = await awv.createTransaction({
 			data: content
 		}, wallet)
 
 		tx.addTag('App-Name', 'scribe')
 		tx.addTag('App-Version', '0.0.0')
 		tx.addTag('Unix-Time', this.getTime())
-		await connection.transactions.sign(tx, wallet)
+		await awv.transactions.sign(tx, wallet)
 		console.log(tx)
-		await connection.transactions.post(tx)
+		await awv.transactions.post(tx)
 		console.log('Mail dispatched!')
 	}
 
-	public checkStatus(connection: any = arweave) {
-		connection.network.getInfo().then(console.log)
+	public checkStatus(awv: any = arweave) {
+		awv.network.getInfo().then(console.log)
 	}
 
-	public async searchTestTxn(connection: any = arweave) {
-		const result = await connection.transactions.search('App-name', 'permamail')
-		console.log('result', result)
+	public async searchTestTxn(awv: any = arweave) {
 		let query =
 		{
 			op: 'equals',
@@ -68,17 +64,18 @@ export default class ApiService {
 			expr2: 'scribe'
 		}
 
-		const res = await connection.api.post(`arql`, query)
-		var tx_rows = []
+		const res = await awv.api.post(`arql`, query)
+		let tx_rows = []
 		if (res.data == '') {
 			tx_rows = []
 		} else {
-			tx_rows = await Promise.all(res.data.map(async function (id: string, i: number) {
+			tx_rows = await Promise.all(res.data.map(async (id: string, i: number) => {
 				console.log(res)
 				let tx_row: any = {}
-				var tx = await connection.transactions.get(id)
+				var tx = await awv.transactions.get(id)
 				tx_row['unixTime'] = '0'
 				const tags = tx.get('tags')
+
 				tags.forEach((tag: any) => {
 					let key = tag.get('name', { decode: true, string: true })
 					let value = tag.get('value', { decode: true, string: true })
@@ -86,13 +83,16 @@ export default class ApiService {
 				})
 
 				tx_row['id'] = id
-				tx_row['tx_status'] = await connection.transactions.getStatus(id)
-				tx_row['from'] = await connection.wallets.ownerToAddress(tx.owner)
-				tx_row['td_fee'] = connection.ar.winstonToAr(tx.reward)
-				tx_row['td_qty'] = connection.ar.winstonToAr(tx.quantity)
+				tx_row['tx_status'] = await awv.transactions.getStatus(id)
+				tx_row['from'] = await awv.wallets.ownerToAddress(tx.owner)
+				tx_row['data'] = await tx.get('data', {decode: true, string: true});
+				tx_row['td_fee'] = awv.ar.winstonToAr(tx.reward)
+				tx_row['td_qty'] = awv.ar.winstonToAr(tx.quantity)
 
 				return tx_row
 			}))
+
+			console.log(tx_rows);
 		}
 	}
 }

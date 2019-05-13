@@ -1,17 +1,22 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import Button from '@material-ui/core/Button/Button';
-import SaveIcon from '@material-ui/icons/Save';
 
 import './create-article-buttons.css'
-import SendButton from './SendButton';
+import SendIcon from '@material-ui/icons/Send';
 
-const CreateArticleButtons = () => {
+type Props = {
+    handleClickOpen: any
+}
+
+const CreateArticleButtons = (props: Props) => {
+    const { handleClickOpen } = props
     return (
         <div className="create-article-button-container">
-            <SendButton />
-            {/* <Button size="small" className="button" variant="outlined">
-                <SaveIcon/>
-            </Button> */}
+            			<div>
+				<Button size="small" className="button" variant="outlined" onClick={handleClickOpen}>
+					<SendIcon />
+				</Button>
+			</div>
         </div>
     )
 }

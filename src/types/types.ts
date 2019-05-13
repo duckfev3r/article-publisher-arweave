@@ -7,13 +7,13 @@ export default interface INavLink {
 	id: number
 }
 
-export interface IComposedArticle {
+export interface IArticle {
 	meta: IArticleMeta
 	content: IArticleContent
 }
 
 export interface IArticleMeta {
-	tags: IArticleTag[]
+	tags: ArticleTag[]
 	synopsis: string
 	uniqueId: string
 }
@@ -25,13 +25,15 @@ export interface IArticleContent {
 	featuredImg?: IArticleImg
 }
 
-export interface IArticleTag {
-	key: string,
-	value: string
-}
+export type ArticleTag = string
 
 export interface IArticleImg {
 	title: string
 	alt: string
 	url: string
+}
+
+export interface IInvalidField {
+	title: string
+	body: string
 }

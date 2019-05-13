@@ -28,21 +28,22 @@ const formats: any = [
 
 type Props = {
     callback: any
+    editorCallback: any
+    titleChange: any
     body: string
     classes: any
 }
 
 class ArticleForm extends React.Component<Props> {
-    callback: any
     body: string
     classes: any
     quillRef: any
     reactQuillRef: any
+    initialized: boolean
 
     constructor(props: Props) {
         super(props)
-        // props.callback
-        // this.body = props.body
+
         this.classes = props.classes
 
         this.quillRef = null;      // Quill instance
@@ -53,6 +54,7 @@ class ArticleForm extends React.Component<Props> {
 
     componentDidMount() {
         this.attachQuillRefs()
+
     }
 
     componentDidUpdate() {
@@ -62,10 +64,10 @@ class ArticleForm extends React.Component<Props> {
     attachQuillRefs() {
         if (typeof this.reactQuillRef.getEditor !== 'function') return;
         this.quillRef = this.reactQuillRef.getEditor();
-    }
-
-    handleChanges(e: any) {
-        this.props.callback(e, this.quillRef.getText())
+        if (!this.initialized) {
+            this.props.editorCallback(this.quillRef)
+        }
+        this.initialized = true;
     }
 
     render() {
@@ -87,6 +89,7 @@ class ArticleForm extends React.Component<Props> {
                             notchedOutline: this.classes.notchedOutline,
                         },
                     }}
+                    onChange={this.props.titleChange}
                     label="Title"
                     variant="outlined"
                     id="custom-css-outlined-input"
@@ -94,7 +97,7 @@ class ArticleForm extends React.Component<Props> {
                 <ReactQuill
                     theme='snow'
                     value={this.props.body}
-                    onChange={this.handleChanges.bind(this)}
+                    onChange={this.props.callback}
                     modules={modules}
                     formats={formats}
                     ref={(el) => { this.reactQuillRef = el }}

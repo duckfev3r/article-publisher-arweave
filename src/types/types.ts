@@ -7,13 +7,27 @@ export default interface INavLink {
 	id: number
 }
 
-export interface IComposeArticle {
+export interface IComposedArticle {
+	meta: IArticleMeta
+	content: IArticleContent
+}
+
+export interface IArticleMeta {
+	tags: IArticleTag[]
+	synopsis: string
+	uniqueId: string
+}
+
+export interface IArticleContent {
 	title: string
 	tagline: string
-	featuredImg: IArticleImg
-	tags: string[]
-	content: string
-	uniqueId: string
+	body: string
+	featuredImg?: IArticleImg
+}
+
+export interface IArticleTag {
+	key: string,
+	value: string
 }
 
 export interface IArticleImg {

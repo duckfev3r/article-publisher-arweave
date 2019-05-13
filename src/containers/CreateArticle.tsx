@@ -17,6 +17,8 @@ import { Button } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 
 import Keystore from '../keystore'
+import { IArticleContent, IArticleMeta } from '../types/types';
+import { IArticleContent, IArticleMeta } from '../types/types';
 
 /**
  * Create Article
@@ -39,11 +41,10 @@ import Keystore from '../keystore'
 
 export interface Props extends WithStyles<typeof CreateArticleStyles> { }
 type State = {
-	title: string
-	body: string
+	article: IArticle
 	keystore: any
-	synopsis: string
 };
+
 
 class CreateArticle extends React.Component<Props, State> {
 	api: ApiService
@@ -52,10 +53,19 @@ class CreateArticle extends React.Component<Props, State> {
 		super(props)
 
 		this.state = {
-			title: '',
-			body: '',
-			keystore: '',
-			synopsis: ''
+			article: {
+				content: {
+					title: '',
+					body: '',
+					tagline: ''
+				},
+				meta: {
+					tags: [],
+					synopsis: '',
+					uniqueId: ''
+				}
+			},
+			keystore: ''
 		}
 
 		this.api = new ApiService
@@ -77,7 +87,7 @@ class CreateArticle extends React.Component<Props, State> {
 		this.setState({
 			body: html,
 			synopsis: this.publishing.createSynopsis(text)
-		}, ()=> {
+		}, () => {
 			console.log(this.state)
 		})
 	}

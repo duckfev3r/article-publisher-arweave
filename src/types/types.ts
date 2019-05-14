@@ -12,9 +12,10 @@ export interface IArticle {
 	content: IArticleContent
 }
 
+export type IArweaveTag = string
+
 export interface IArticleMeta {
 	tags: ArticleTag[]
-	synopsis: string
 	uniqueId: string
 }
 
@@ -22,6 +23,7 @@ export interface IArticleContent {
 	title: string
 	tagline: string
 	body: string
+	stringBody?: string
 	featuredImg?: IArticleImg
 }
 

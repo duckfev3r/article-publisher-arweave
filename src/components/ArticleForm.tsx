@@ -10,7 +10,7 @@ const modules: any = {
         [{ 'header': [1, 2, 3, false] }],
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        // ['image'],
+        ['image'],
         [{ 'align': [] }],
         ['code-block'],
         ['clean']

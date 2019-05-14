@@ -4,7 +4,6 @@ import 'react-quill/dist/quill.snow.css';
 // import 'react-quill/dist/quill.bubble.css';
 
 import ApiService from '../services/ApiService'
-import PublishingService from '../services/PublishingService'
 
 import '../main.css'
 import CreateArticleStyles from './CreateArticleStyles'
@@ -12,9 +11,6 @@ import CreateArticleButtons from '../components/CreateArticleButtons';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import KeyUploadComponent from '../components/KeyUploadComponent';
 import ArticleForm from '../components/ArticleForm';
-
-import { Button } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
 
 import Keystore from '../keystore'
 
@@ -38,7 +34,6 @@ type State = {
 
 class CreateArticle extends React.Component<Props, State> {
 	api: ApiService
-	publishing: PublishingService
 	quillEditor: any
 
 	constructor(props: Props) {
@@ -48,12 +43,12 @@ class CreateArticle extends React.Component<Props, State> {
 			content: {
 				title: '',
 				body: '',
+				stringBody:'',
 				tagline: ''
 			},
 			meta: {
 				tags: [],
-				synopsis: '',
-				uniqueId: ''
+				uniqueId: '',
 			},
 			invalidField: {
 				title: '',
@@ -66,7 +61,6 @@ class CreateArticle extends React.Component<Props, State> {
 		}
 
 		this.api = new ApiService
-		this.publishing = new PublishingService
 
 		this.setupBindings()
 	}
@@ -112,22 +106,47 @@ class CreateArticle extends React.Component<Props, State> {
 				keystore: JSON.parse(content)
 			})
 			console.log(content)
-			// this.testTxn(JSON.parse(content))
+			// testTxn(JSON.parse(content))
 		}
 		fileReader.readAsText(file)
 	}
 
 	sendClicked() {
-		// Validate Inputs if invalid show appropriate dialogue & return
-		if (!this.checkFields()) return
-		// Show confirm Dialogue, if ignored, return
+		// Validate Inputs
+		if (!this.checkFields(this.state, this.quillEditor)) return
 		this.toggleSendDialogue()
-
-		// Send all data to the publishing service
 	}
 
-	checkFields(): boolean {
-		const { title, body } = this.state.content
+	toggleSendDialogue() {
+		const sendDialogueOpen = this.state.sendDialogueOpen ? false : true
+		this.setState({
+			sendDialogueOpen
+		})
+	}
+
+	async sendDialogueConfirm() {
+		const article: IArticle = {
+			meta : this.state.meta,
+			content : this.state.content
+		}
+		article.content.stringBody = this.quillEditor.getText()
+		try {
+			this.api.postArticle(article, this.state.keystore)
+		} catch(er) {
+			// Handle error... probably show a popup
+		}
+		this.toggleSendDialogue()
+	}
+
+	sendDialogueCancel() {
+		this.toggleSendDialogue()
+	}
+
+
+	checkFields(state: any, quill: any): boolean {
+		const { title, body } = state.content
+		const tags = state.meta.tags
+		console.log(state)
 		let alertTitle = ''
 		let alertBody = ''
 
@@ -143,9 +162,15 @@ class CreateArticle extends React.Component<Props, State> {
 			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
 			return
 		}
-		if (body.length < 200) {
+		if (quill.getText().length < 200) {
 			alertTitle = 'Article is too short'
 			alertBody = 'The article must be at least 200 characters long.'
+			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
+			return
+		}
+		if (tags.length < 2) {
+			alertTitle = 'More Tags Needed'
+			alertBody = 'Please add at least 2 tags to your article.'
 			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
 			return
 		}
@@ -165,25 +190,6 @@ class CreateArticle extends React.Component<Props, State> {
 		this.setState({
 			invalidFieldOpen
 		})
-	}
-
-	prepareArticle() {
-
-	}
-
-	toggleSendDialogue() {
-		const sendDialogueOpen = this.state.sendDialogueOpen ? false : true
-		this.setState({
-			sendDialogueOpen
-		})
-	}
-
-	sendDialogueConfirm() {
-		this.toggleSendDialogue()
-	}
-
-	sendDialogueCancel() {
-		this.toggleSendDialogue()
 	}
 
 	handleTitleChange(e: any) {
@@ -260,6 +266,10 @@ class CreateArticle extends React.Component<Props, State> {
 							<CreateArticleButtons
 								handleClickOpen={this.sendClicked}
 							/>
+
+							{/* <button onClick={()=> this.api.testTxn(this.state.keystore)}>send test txn</button> */}
+							<button onClick={()=> this.api.getAllArticles()}>search test txn</button>
+
 						</div>
 				}
 			</div>

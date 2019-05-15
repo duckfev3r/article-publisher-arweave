@@ -75,7 +75,6 @@ class CreateArticle extends React.Component<Props, State> {
 		this.handleContentChange = this.handleContentChange.bind(this)
 		this.handleKeystoreChange = this.handleKeystoreChange.bind(this)
 		this.toggleSendDialogue = this.toggleSendDialogue.bind(this)
-		this.sendDialogueCancel = this.sendDialogueCancel.bind(this)
 		this.sendDialogueConfirm = this.sendDialogueConfirm.bind(this)
 		this.sendClicked = this.sendClicked.bind(this)
 		this.toggleInvalidFieldDialogue = this.toggleInvalidFieldDialogue.bind(this)
@@ -133,15 +132,10 @@ class CreateArticle extends React.Component<Props, State> {
 		try {
 			this.api.postArticle(article, this.state.keystore)
 		} catch(er) {
-			// Handle error... probably show a popup
+			console.log(er)
 		}
 		this.toggleSendDialogue()
 	}
-
-	sendDialogueCancel() {
-		this.toggleSendDialogue()
-	}
-
 
 	checkFields(state: any, quill: any): boolean {
 		const { title, body } = state.content
@@ -236,7 +230,7 @@ class CreateArticle extends React.Component<Props, State> {
 						<div>
 							<ConfirmSendDialogue
 								open={this.state.sendDialogueOpen}
-								cancel={this.sendDialogueCancel}
+								cancel={this.toggleSendDialogue}
 								confirm={this.sendDialogueConfirm}
 							/>
 

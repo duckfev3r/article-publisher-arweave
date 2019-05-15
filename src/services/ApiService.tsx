@@ -11,41 +11,24 @@ const prefix = envDevPrefix
 
 export default class ApiService {
 
-	private addAppMetaTags(tx: any, article: IArticle) {
-		tx.addTag(`${prefix}-synopsis`, this.createSynopsis(article.content.stringBody))
-		tx.addTag('App-Name', `${prefix}`)
-		tx.addTag(`${prefix}-id`, this.randomString())
-		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))
-		tx.addTag('App-Version', '0.0.0')
-		tx.addTag('Unix-Time', this.getTime())
-		return tx
-	}
-
-	private addContentTags(tx: any, tags: string[]) {
-		tags.forEach((tag: string) => {
-			tx.addTag(`${prefix}-tag`, tag)
-		})
-		return tx
-	}
-
 	private createSynopsis(body: string) {
 		return `${body.slice(0, 200)} ...`
 	}
 
 	public async postArticle(article: IArticle, wallet: any, awv: any = arweave) {
 		let tx = await awv.createTransaction({
-			data: JSON.stringify(article.content)
+			data: encodeURI(JSON.stringify(article.content))
 		}, wallet)
 		this.addAppMetaTags(tx, article)
 		this.addContentTags(tx, article.meta.tags)
 		try {
-			const sign = await awv.transactions.sign(tx, wallet)
+			await awv.transactions.sign(tx, wallet)
 			const post = await awv.transactions.post(tx)
 			if (post && post.status !== 200) {
 				throw (post.status)
 			}
 		} catch (err) {
-			return {err}
+			return { err }
 		}
 	}
 
@@ -56,8 +39,14 @@ export default class ApiService {
 			expr1: 'App-Name',
 			expr2: `${prefix}`
 		}
-		const res = await awv.api.post(`arql`, query)
-		return this.createRows(res)
+		try {
+			const res = await awv.api.post(`arql`, query)
+			return this.createRows(res)
+		}
+		catch (err) {
+			return { err }
+		}
+
 	}
 
 	private async createRows(
@@ -74,13 +63,28 @@ export default class ApiService {
 				var tx = await awv.transactions.get(id)
 				tx_row['unixTime'] = '0'
 				const tags = tx.get('tags')
-
-				tags.forEach((tag: any) => {
-					let key = tag.get('name', { decode: true, string: true })
-					let value = tag.get('value', { decode: true, string: true })
-					tx_row[key] = value
-					if (key === 'Unix-Time') tx_row['unixTime'] = value
-				})
+				if (tags.length) {
+					tx_row.tags = []
+					tx_row.scribe_data = []
+					tx_row.scribe_tags = []
+					tags.forEach((tag: any) => {
+						let key = tag.get('name', { decode: true, string: true })
+						let value = tag.get('value', { decode: true, string: true })
+						if (
+							key === `${prefix}-synopsis` ||
+							key === `${prefix}-title` ||
+							key === `${prefix}-id`) {
+							value = decodeURI(value)
+							tx_row.scribe_data[key] = value
+							return
+						} else if (key.indexOf(prefix) > -1) {
+							tx_row.scribe_tags.push({key, value})
+						} else {
+							tx_row[key] = { key, value }
+						}
+						if (key === 'Unix-Time') tx_row['unixTime'] = value
+					})
+				}
 
 				tx_row['id'] = id
 				tx_row['tx_status'] = await awv.transactions.getStatus(id)
@@ -99,6 +103,23 @@ export default class ApiService {
 		return tx_rows
 	}
 
+	private addAppMetaTags(tx: any, article: IArticle) {
+		tx.addTag(`${prefix}-synopsis`, encodeURI(this.createSynopsis(article.content.stringBody)))
+		tx.addTag('App-Name', `${prefix}`)
+		tx.addTag(`${prefix}-id`, this.randomString())
+		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))
+		tx.addTag('App-Version', '0.0.0')
+		tx.addTag('Unix-Time', this.getTime())
+		return tx
+	}
+
+	private addContentTags(tx: any, tags: string[]) {
+		tags.forEach((tag: string, index: number) => {
+			tx.addTag(`${prefix}-tag-${index}`, tag)
+		})
+		return tx
+	}
+
 	public checkStatus(awv: any = arweave) {
 		awv.network.getInfo().then(console.log)
 	}
@@ -114,3 +135,5 @@ export default class ApiService {
 		return result;
 	}
 }
+
+export { prefix }

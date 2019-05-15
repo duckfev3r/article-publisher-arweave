@@ -1,0 +1,84 @@
+ .card {
+ 	min-width: 275;
+ 	margin: 1px 0px;
+ 	/* padding-bottom: 15px; */
+ }
+
+  h2, h3, h4 {
+	  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
+
+ .bullet {
+ 	display: 'inline-block';
+ 	margin: 0 2px;
+ 	transform: scale(0.8)
+ }
+
+ .title {
+ 	font-size: 14
+ }
+
+ .pos {
+ 	margin-bottom: 12
+ }
+
+ .card-actions {
+ 	float: right
+ }
+
+ .article-list-card {
+ 	padding: 12px 18px
+ }
+
+ .article-list-card>h1 {
+ 	font-weight: 400;
+ 	font-style: normal;
+ 	line-height: 1.2;
+ 	font-size: 3em !important;
+ 	/* font-size: 2em !important; */
+ }
+
+ .article-list-card>h2 {
+ 	/* color: grey; */
+	 font-size: 1.9em !important;
+	 letter-spacing: -1px;
+	 font-weight: 600;
+ 	line-height: 0.7;
+ }
+
+ .article-list-card>h3 {
+ 	font-size: 1.6em !important;
+ 	line-height: 1.7;
+ }
+
+ .article-list-card>p {
+ 	/* padding: 0px 10px 0px 10px !important; */
+ 	font-size: 1.15em;
+ 	line-height: 1.5;
+ 	font-weight: 400 !important;
+ 	color: rgb(151, 151, 151);
+ }
+
+ .root {
+ 	display: flex;
+ 	justify-content: center;
+ 	flex-wrap: wrap
+ }
+
+ .chip {
+ 	margin: 10px 5px 20px 0px;
+ 	/* margin-right: 5px;
+	 margin-bottom: 20px; */
+ 	padding: 0px !important;
+ 	border-radius: 4px !important;
+ 	border: 1px solid lightgrey !important;
+ }
+
+ .chip>span {
+ 	color: grey;
+ }
+
+ .article-list-card a {
+ 	text-decoration: none;
+ 	color: black !important;
+ }

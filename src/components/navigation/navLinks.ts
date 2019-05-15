@@ -1,7 +1,7 @@
 import INavLink from "../../types/types";
 import ArticleIndex from "../../containers/ArticleIndex";
 import CreateArticle from "../../containers/CreateArticle";
-import ViewArticle from "../../containers/ViewArticle";
+import ViewArticle from "../ViewArticle";
 
 const navLinks: INavLink[] = [
 	{
@@ -17,7 +17,7 @@ const navLinks: INavLink[] = [
 		id: 1
 	},
 	{
-		link: '/view',
+		link: '/view/:id',
 		title: 'View',
 		component: ViewArticle,
 		id: 3

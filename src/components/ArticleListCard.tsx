@@ -12,28 +12,39 @@ type Props = {
 function ArticleListCard(props: Props) {
     const { scribe_data, scribe_tags } = props.article;
 
-    // const bull = <span className='bullet'>•</span>;
-
+    const chipValue = () => {
+        let str = ''
+        scribe_tags.forEach((tag: any, index: number) => {
+            str += (index + 1 !== scribe_tags.length ? `${tag.value} • ` : `${tag.value} `).toUpperCase()
+        })
+        console.log(str)
+        return str
+    }
     return (
         <div className="article-list-card card">
             <h2>
-            <Link to={'view'}>
-            {scribe_data[`${prefix}-title`]}
-             </Link>
+                <Link to={`view/123`}>
+                    {scribe_data[`${prefix}-title`]}
+                </Link>
             </h2>
+            <div className="tags-heading">
+                <i>TAGS</i>
+            </div>
+            {scribe_tags.map((tag: any, index: number) => {
+                return <Chip
+                            key={tag.value}
+                            onClick={() => console.log('clicked')}
+                            label={tag.value.toUpperCase()}
+                            className="chip"
+                            variant="outlined"
+                        />
+            })}
             <p>
                 {scribe_data[`${prefix}-synopsis`]}
             </p>
-            {scribe_tags.map((tag: any) => {
-                return <Chip
-                    key={tag.value}
-                    // onClick={() => console.log('clicked')}
-                    label={tag.value.toUpperCase()}
-                    className="chip"
-                    variant="outlined"
-                />
-            })}
-            <Divider />
+            <div>
+                <Divider />
+            </div>
         </div>
 
     );

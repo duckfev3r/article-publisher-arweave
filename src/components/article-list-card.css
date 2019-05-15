@@ -4,9 +4,9 @@
  	/* padding-bottom: 15px; */
  }
 
-  h2, h3, h4 {
-	  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-  }
+ h2, h3, h4, p {
+ 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+ }
 
  .bullet {
  	display: 'inline-block';
@@ -27,7 +27,7 @@
  }
 
  .article-list-card {
- 	padding: 12px 18px
+ 	padding: 0px 18px
  }
 
  .article-list-card>h1 {
@@ -40,9 +40,9 @@
 
  .article-list-card>h2 {
  	/* color: grey; */
-	 font-size: 1.9em !important;
-	 letter-spacing: -1px;
-	 font-weight: 600;
+ 	font-size: 1.8em !important;
+ 	letter-spacing: -1px;
+ 	font-weight: 600;
  	line-height: 0.7;
  }
 
@@ -53,10 +53,12 @@
 
  .article-list-card>p {
  	/* padding: 0px 10px 0px 10px !important; */
- 	font-size: 1.15em;
+ 	font-size: 1em;
  	line-height: 1.5;
  	font-weight: 400 !important;
  	color: rgb(151, 151, 151);
+	 letter-spacing: -1px;
+	 margin: 15px 0px 60px 0px !important;
  }
 
  .root {
@@ -66,16 +68,25 @@
  }
 
  .chip {
- 	margin: 10px 5px 20px 0px;
+ 	margin: 10px 5px 5px 0px;
  	/* margin-right: 5px;
 	 margin-bottom: 20px; */
  	padding: 0px !important;
  	border-radius: 4px !important;
  	border: 1px solid lightgrey !important;
+ 	font-style: italic;
  }
 
  .chip>span {
+	 color: grey;
+ }
+
+ .tags-heading {
  	color: grey;
+ 	font-size: 0.9em;
+	 font-weight: 400;
+	 letter-spacing: 5px;
+
  }
 
  .article-list-card a {

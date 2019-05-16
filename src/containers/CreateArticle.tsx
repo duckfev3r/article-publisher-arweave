@@ -63,12 +63,12 @@ class CreateArticle extends React.Component<Props, State> {
 		this.api = new ApiService
 
 		this.setupBindings()
-	} 
+	}
 
 	componentDidMount() {
-		// this.setState({
-		// 	keystore: Keystore
-		// })
+		this.setState({
+			keystore: Keystore
+		})
 	}
 
 	setupBindings() {
@@ -81,6 +81,7 @@ class CreateArticle extends React.Component<Props, State> {
 		this.handleTitleChange = this.handleTitleChange.bind(this)
 		this.removeTag = this.removeTag.bind(this)
 		this.updateTagField = this.updateTagField.bind(this)
+		this.handleTaglineChange = this.handleTaglineChange.bind(this)
 	}
 
 	handleContentChange(html: any) {
@@ -117,6 +118,7 @@ class CreateArticle extends React.Component<Props, State> {
 	}
 
 	toggleSendDialogue() {
+		console.log(this.state.content)
 		const sendDialogueOpen = this.state.sendDialogueOpen ? false : true
 		this.setState({
 			sendDialogueOpen
@@ -138,7 +140,7 @@ class CreateArticle extends React.Component<Props, State> {
 	}
 
 	checkFields(state: any, quill: any): boolean {
-		const { title, body } = state.content
+		const { title, tagline } = state.content
 		const tags = state.meta.tags
 		console.log(state)
 		let alertTitle = ''
@@ -147,6 +149,18 @@ class CreateArticle extends React.Component<Props, State> {
 		if (!title) {
 			alertTitle = 'Invalid Title'
 			alertBody = 'You must give your article a title before proceeding.'
+			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
+			return
+		}
+		if (!tagline) {
+			alertTitle = 'Invalid Tagline'
+			alertBody = 'You must give your article a tagline before proceeding.'
+			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
+			return
+		}
+		if (tagline.length < 15 || tagline.length > 60) {
+			alertTitle = 'Tagline Wrong Length'
+			alertBody = 'Your tagline must be between 15 and 60 characters long.'
 			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
 			return
 		}
@@ -195,6 +209,15 @@ class CreateArticle extends React.Component<Props, State> {
 		})
 	}
 
+	handleTaglineChange(e: any) {
+		const tagline = e.target.value
+		const content = this.state.content
+		content.tagline = tagline
+		this.setState({
+			content
+		},() => {console.log(this.state.content)})
+	}
+
 	updateTagField(tag: string) {
 		if (this.state.meta.tags.length < 10) {
 			const meta = this.state.meta
@@ -236,6 +259,7 @@ class CreateArticle extends React.Component<Props, State> {
 
 							<ArticleForm
 								titleChange={this.handleTitleChange}
+								taglineChange={this.handleTaglineChange}
 								callback={this.handleContentChange}
 								editorCallback={this.bindQuillEditor.bind(this)}
 								body={this.state.content.body}

@@ -30,6 +30,7 @@ type Props = {
     titleChange: any
     body: string
     classes: any
+    taglineChange: any
 }
 
 class ArticleForm extends React.Component<Props> {
@@ -110,11 +111,11 @@ class ArticleForm extends React.Component<Props> {
                         }
                     }}
                     label="Tagline"
-                    placeholder="Introduce your article..."
+                    placeholder="A quick summary of the article. (one sentence)"
                     margin="normal"
                     variant="outlined"
                     autoComplete="off"
-                    // onChange={checkField}
+                    onChange={this.props.taglineChange}
                     // value={field}
                     // helperText="Adding detailed Tags will help people find your article."
                 />

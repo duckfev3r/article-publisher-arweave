@@ -22,7 +22,13 @@ const Header = ({ navLinks }: Props) => {
             </div>
             <div className="header-button-container">
                 <Link to='/create'>
-                    <Button size="small" className="button" variant="outlined">
+                    <Button
+                        size="medium"
+                        className="button"
+                        variant="text"
+                        disableRipple
+                        // color="green"
+                    >
                         Post
                     </Button>
                 </Link>

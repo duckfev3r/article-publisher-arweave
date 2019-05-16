@@ -17,15 +17,17 @@ const Header = ({ navLinks }: Props) => {
             </div>
             {
                 navLinks.map((link) => {
-                    return (
-                        <span
-                            key={link.link}
-                            className='link'>
-                            <Link to={link.link}>
-                                {link.title}
-                            </Link>
-                        </span>
-                    )
+                    if (link.nav) {
+                        return (
+                            <span
+                                key={link.link}
+                                className='link'>
+                                <Link to={link.link}>
+                                    {link.title}
+                                </Link>
+                            </span>
+                        )
+                    }
                 })
             }
         </div>

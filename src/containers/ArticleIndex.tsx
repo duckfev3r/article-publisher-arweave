@@ -2,14 +2,17 @@ import React from 'react';
 import ApiService, { prefix } from '../services/ApiService'
 import ArticleListCard from '../components/ArticleListCard';
 import './ArticleIndex.css'
+import CachingService from '../services/CachingService';
+import LoadingComponent from '../components/LoadingComponent';
 
 type State = {
-	articles: any[]
+	articles: any[] | null
 }
 
 class ArticleIndex extends React.Component {
 
 	api: ApiService
+	cache: CachingService
 	articles: any[]
 	prefix: string
 	state: State
@@ -18,28 +21,37 @@ class ArticleIndex extends React.Component {
 		super(props)
 
 		this.api = new ApiService
+		this.cache = new CachingService
 		this.prefix = prefix
 
 		this.state = {
-			articles: []
+			articles: null
 		}
+
+	}
+
+	componentDidMount() {
 		this.getArticles()
 	}
 
 	async getArticles() {
-		try {
-			const articles: any = await this.api.getAllArticles()
-			if (articles.tx_status && articles.tx_status.status !== 200) {
-				throw (articles.tx_status.status)
-			}
-			this.setState({
-				articles
+		console.log('getting articles....')
+		const cachedArticles = this.cache.getDocument('index')
+		console.log('cached articles', cachedArticles)
+		if (cachedArticles) {
+			this.setState({ articles: cachedArticles })
+		} else {
+			console.log('else fired')
+			this.api.getAllArticles().then((articles: any) => {
+				if (articles.tx_status && articles.tx.status.status !== 200) {
+					throw (articles.tx_status.status)
+				}
+				console.log(articles)
+				this.setState({ articles })
+				this.cache.setDocument('index', articles)
+			}).catch((err: any) => {
+				this.setState({ articles: err })
 			})
-			console.log(articles)
-		}
-		catch (err) {
-			this.setState({ articles: err })
-			console.log('error', err)
 		}
 	}
 
@@ -57,9 +69,7 @@ class ArticleIndex extends React.Component {
 							/>
 						</div>
 					)
-				}) :
-				null
-			// <div></div>
+				}) : <LoadingComponent message={'Loading Articles......'} />
 		)
 	}
 }

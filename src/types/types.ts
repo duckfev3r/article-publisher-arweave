@@ -4,7 +4,8 @@ export default interface INavLink {
 	link: string
 	title: string
 	component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
-	id: number
+	id: number,
+	nav: boolean
 }
 
 export interface IArticle {

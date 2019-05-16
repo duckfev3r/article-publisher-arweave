@@ -46,13 +46,27 @@ export default class ApiService {
 		catch (err) {
 			return { err }
 		}
+	}
 
+	public async getArticleData(id: string, awv: any = arweave) {
+		try {
+			const tx = await awv.transactions.get(id)
+			const data = JSON.parse(
+				decodeURI(
+					tx.get('data', { decode: true, string: true })
+					)
+				)
+			return data
+		}
+		catch (err) {
+			return { err }
+		}
 	}
 
 	private async createRows(
 		res: any,
+		getData: boolean = false,
 		awv: any = arweave,
-		getData: boolean = false
 	) {
 		let tx_rows: any[] = []
 		if (res.data == '') {
@@ -69,16 +83,16 @@ export default class ApiService {
 					tx_row.scribe_tags = []
 					tags.forEach((tag: any) => {
 						let key = tag.get('name', { decode: true, string: true })
-						let value = tag.get('value', { decode: true, string: true })
+						let value: string = tag.get('value', { decode: true, string: true })
 						if (
 							key === `${prefix}-synopsis` ||
 							key === `${prefix}-title` ||
 							key === `${prefix}-id`) {
 							value = decodeURI(value)
-							tx_row.scribe_data[key] = value
+							tx_row.scribe_data.push({key, value})
 							return
 						} else if (key.indexOf(prefix) > -1) {
-							tx_row.scribe_tags.push({key, value})
+							tx_row.scribe_tags.push({ key, value })
 						} else {
 							tx_row[key] = { key, value }
 						}

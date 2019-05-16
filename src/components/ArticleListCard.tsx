@@ -12,6 +12,11 @@ type Props = {
 function ArticleListCard(props: Props) {
     const { scribe_data, scribe_tags } = props.article;
 
+    const { synopsis, title } = {
+            synopsis: scribe_data[0].value,
+            title: scribe_data[2].value
+        }
+
     const chipValue = () => {
         let str = ''
         scribe_tags.forEach((tag: any, index: number) => {
@@ -23,8 +28,8 @@ function ArticleListCard(props: Props) {
     return (
         <div className="article-list-card card">
             <h2>
-                <Link to={`view/123`}>
-                    {scribe_data[`${prefix}-title`]}
+                <Link to={`view/${props.article.id}`}>
+                    {title}
                 </Link>
             </h2>
             <div className="tags-heading">
@@ -40,7 +45,7 @@ function ArticleListCard(props: Props) {
                         />
             })}
             <p>
-                {scribe_data[`${prefix}-synopsis`]}
+                {synopsis}
             </p>
             <div>
                 <Divider />

@@ -1,0 +1,51 @@
+.ql-container {
+	border-bottom-left-radius: 4px !important;
+	border-bottom-right-radius: 4px !important;
+}
+
+.article-view img {
+	max-width: 100%;
+	min-width: 100%;
+}
+
+.article-display {
+	max-height: none;
+}
+
+.article-view h1, .article-view p {
+	font-family: Georgia, 'Times New Roman', Times, serif
+}
+
+.ql-syntax {
+	max-width: 100% !important;
+	overflow-wrap: break-word !important;
+	word-break: break-all !important;
+	word-wrap: break-word !important;
+	overflow-y: auto;
+}
+
+.article-view h1 {
+	font-weight: 400;
+	font-style: normal;
+	line-height: 1.2;
+	font-size: 2.6em !important;
+	/* font-size: 2em !important; */
+}
+
+.article-view h2 {
+	/* color: grey; */
+	font-size: 1.7em !important;
+	line-height: 1.2;
+}
+
+.article-view h3 {
+	font-size: 1.6em !important;
+	line-height: 1.6;
+}
+
+.article-view p {
+	/* padding: 0px 10px 0px 10px !important; */
+	font-size: 1.4em;
+	line-height: 2;
+	font-weight: 400
+}

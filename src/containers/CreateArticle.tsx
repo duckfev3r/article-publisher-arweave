@@ -261,7 +261,6 @@ class CreateArticle extends React.Component<Props, State> {
 								handleClickOpen={this.sendClicked}
 							/>
 
-							{/* <button onClick={()=> this.api.testTxn(this.state.keystore)}>send test txn</button> */}
 							<button onClick={()=> this.api.getAllArticles()}>search test txn</button>
 
 						</div>

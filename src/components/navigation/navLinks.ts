@@ -8,19 +8,22 @@ const navLinks: INavLink[] = [
 		link: '/create',
 		title: 'Create',
 		component: CreateArticle,
-		id: 2
+		id: 2,
+		nav: true
 	},
 	{
 		link: '/',
 		title: 'Explore',
 		component: ArticleIndex,
-		id: 1
+		id: 1,
+		nav: true
 	},
 	{
 		link: '/view/:id',
 		title: 'View',
 		component: ViewArticle,
-		id: 3
+		id: 3,
+		nav: false
 	}
 ]
 

@@ -1,6 +1,7 @@
-export default class CachingService {
+const _docPrefix = 'scribe_'
 
-	private _docPrefix = 'scribe_'
+
+export default class CachingService {
 
 	public listAllDocuments() {
 		let values = [],
@@ -8,24 +9,27 @@ export default class CachingService {
 			i = keys.length;
 
 		while (i--) {
-			values.push(localStorage.getItem(keys[i]));
+			values.push(sessionStorage.getItem(keys[i]));
 		}
 
 		return values.filter(value => {
-			return value.includes(this._docPrefix)
+			return value.includes(_docPrefix)
 		});
 	}
 
 	public getDocument(key: string) {
-		return localStorage.getItem(key)
+		const componentKey = this._constructKey(key)
+		const document = sessionStorage.getItem(componentKey)
+		console.log(document)
+		return JSON.parse(decodeURI(document))
 	}
 
-	public saveDocument(key: string, value: string) {
-		return localStorage.setItem(this._constructKey(key), value)
+	public setDocument(key: string, value: string) {
+		const componentKey = this._constructKey(key)
+		sessionStorage.setItem(componentKey, JSON.stringify(value))
 	}
 
 	private _constructKey(key: string) {
-		return `${this._docPrefix}${key}`
+		return `${_docPrefix}${key}`
 	}
-
 }

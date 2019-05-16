@@ -1,0 +1,16 @@
+.loading-container {
+	/* min-height:100%; */
+	min-width:100%;
+	position: absolute;
+	top: 35%;
+	right: 0px;
+	text-align: center;
+}
+
+.loading-message {
+	/* min-height:500px; */
+	min-width: 100%;
+	margin: 0 auto;
+	/* text-align: center !important; */
+	/* margin-bottom: 50% */
+}

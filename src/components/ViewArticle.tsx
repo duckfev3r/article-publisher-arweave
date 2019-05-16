@@ -3,7 +3,8 @@ import ApiService from '../services/ApiService'
 import ReactHtmlParser from 'react-html-parser';
 import CachingService from '../services/CachingService'
 import LoadingComponent from './LoadingComponent'
-import './ViewArticle.css'
+import * as sanitize from 'sanitize-html'
+import './viewArticle.css'
 
 const ViewArticle = (props: any) => {
 	const cache = new CachingService
@@ -17,6 +18,7 @@ const ViewArticle = (props: any) => {
 			setArticleData(cachedArticle)
 		} else {
 			api.getArticleData(match.params.id).then((data: any) => {
+				// const cleanData = sanitize(data)
 				setArticleData(data);
 				cache.setDocument(match.params.id, data)
 			}).catch(err => {

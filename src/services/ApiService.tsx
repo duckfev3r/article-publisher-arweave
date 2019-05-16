@@ -54,8 +54,8 @@ export default class ApiService {
 			const data = JSON.parse(
 				decodeURI(
 					tx.get('data', { decode: true, string: true })
-					)
 				)
+			)
 			return data
 		}
 		catch (err) {
@@ -72,46 +72,48 @@ export default class ApiService {
 		if (res.data == '') {
 			tx_rows = []
 		} else {
-			tx_rows = await Promise.all(res.data.map(async (id: string) => {
-				let tx_row: any = {}
-				var tx = await awv.transactions.get(id)
-				tx_row['unixTime'] = '0'
-				const tags = tx.get('tags')
-				if (tags.length) {
-					tx_row.tags = []
-					tx_row.scribe_data = []
-					tx_row.scribe_tags = []
-					tags.forEach((tag: any) => {
-						let key = tag.get('name', { decode: true, string: true })
-						let value: string = tag.get('value', { decode: true, string: true })
-						if (
-							key === `${prefix}-synopsis` ||
-							key === `${prefix}-title` ||
-							key === `${prefix}-id`) {
-							value = decodeURI(value)
-							tx_row.scribe_data.push({key, value})
-							return
-						} else if (key.indexOf(prefix) > -1) {
-							tx_row.scribe_tags.push({ key, value })
-						} else {
-							tx_row[key] = { key, value }
-						}
-						if (key === 'Unix-Time') tx_row['unixTime'] = value
-					})
-				}
+			tx_rows = await Promise.all(
+				res.data.map(async (id: string) => {
 
-				tx_row['id'] = id
-				tx_row['tx_status'] = await awv.transactions.getStatus(id)
-				tx_row['from'] = await awv.wallets.ownerToAddress(tx.owner)
-				tx_row['td_fee'] = awv.ar.winstonToAr(tx.reward)
-				tx_row['td_qty'] = awv.ar.winstonToAr(tx.quantity)
+					let tx_row: any = {}
+					let tx = await awv.transactions.get(id)
+					tx_row['unixTime'] = '0'
+					const tags = tx.get('tags')
+					if (tags.length) {
+						tx_row.tags = []
+						tx_row.scribe_data = []
+						tx_row.scribe_tags = []
+						tags.forEach((tag: any) => {
+							let key = tag.get('name', { decode: true, string: true })
+							let value: string = tag.get('value', { decode: true, string: true })
+							if (
+								key === `${prefix}-synopsis` ||
+								key === `${prefix}-title` ||
+								key === `${prefix}-id`) {
+								value = decodeURI(value)
+								tx_row.scribe_data.push({ key, value })
+								return
+							} else if (key.indexOf(prefix) > -1) {
+								tx_row.scribe_tags.push({ key, value })
+							} else {
+								tx_row[key] = { key, value }
+							}
+							if (key === 'Unix-Time') tx_row['unixTime'] = value
+						})
+					}
 
-				if (getData) {
-					tx_row['data'] = await tx.get('data', { decode: true, string: true })
-				}
+					tx_row['id'] = id
+					tx_row['tx_status'] = await awv.transactions.getStatus(id)
+					tx_row['from'] = await awv.wallets.ownerToAddress(tx.owner)
+					tx_row['td_fee'] = awv.ar.winstonToAr(tx.reward)
+					tx_row['td_qty'] = awv.ar.winstonToAr(tx.quantity)
 
-				return tx_row
-			}))
+					if (getData) {
+						tx_row['data'] = await tx.get('data', { decode: true, string: true })
+					}
+
+					return tx_row
+				}))
 			console.log(tx_rows);
 		}
 		return tx_rows

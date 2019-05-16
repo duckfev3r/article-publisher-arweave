@@ -8,27 +8,6 @@ import navLinks from './components/navigation/navLinks'
 import Header from './components/navigation/Header';
 
 const routing = (
-
-	// const navLinks: INavLink[] = [
-	// 	{
-	// 		link: '/create',
-	// 		title: 'Create',
-	// 		component: CreateArticle,
-	// 		id: 2
-	// 	},
-	// 	{
-	// 		link: '/',
-	// 		title: 'Explore',
-	// 		component: ArticleIndex,
-	// 		id: 1
-	// 	},
-	// 	{
-	// 		link: '/view:id',
-	// 		title: 'View',
-	// 		component: ViewArticle,
-	// 		id: 3
-	// 	}
-	// ]
 	<Router>
 		<div>
 			<Header navLinks={navLinks} />

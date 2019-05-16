@@ -1,9 +1,10 @@
 .header-container {
-	height : 70px;
+	height: 80px;
 	width: 100%;
 	display: flex;
 	align-items: flex-start;
-	background-color: #393E46;
+	background-color: #ffffff;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2)
 }
 
 .link {
@@ -20,7 +21,18 @@
 }
 
 .header-image {
-	height : 50px;
-	width: 50px;
-	margin: 10px;
+	margin-left: 30px;
+	padding-bottom: 15px;
+}
+
+.header-image img {
+	height: 70px;
+	width: 70px;
+	margin: 5px;
+}
+
+.header-button-container {
+	position: absolute;
+	top: 25px;
+	right: 25px;
 }

@@ -4,8 +4,7 @@ import CreateArticleStyles from '../containers/CreateArticleStyles'
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button/Button';
 
-
-import './key-upload-component.css'
+import './keyUploadComponent.css'
 
 type Props = {
 	classes: any,

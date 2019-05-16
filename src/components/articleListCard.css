@@ -5,6 +5,7 @@
  }
 
  h2, h3, h4, p {
+ 	color: rgba(0, 0, 0, 0.85);
  	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
  }
 
@@ -56,9 +57,9 @@
  	font-size: 1em;
  	line-height: 1.5;
  	font-weight: 400 !important;
- 	color: rgb(151, 151, 151);
-	 letter-spacing: -1px;
-	 margin: 15px 0px 60px 0px !important;
+ 	color: rgba(0, 0, 0, 0.6);
+ 	letter-spacing: -1px;
+ 	margin: 15px 0px 60px 0px !important;
  }
 
  .root {
@@ -73,23 +74,23 @@
 	 margin-bottom: 20px; */
  	padding: 0px !important;
  	border-radius: 4px !important;
- 	border: 1px solid lightgrey !important;
- 	font-style: italic;
+ 	/* border: 1px solid grey !important; */
+ 	/* font-style: italic; */
  }
 
  .chip>span {
-	 color: grey;
+ 	color: grey;
  }
 
  .tags-heading {
  	color: grey;
  	font-size: 0.9em;
-	 font-weight: 400;
-	 letter-spacing: 5px;
-
+ 	font-weight: 400;
+ 	letter-spacing: 5px;
  }
 
  .article-list-card a {
+ 	font-weight: 400;
  	text-decoration: none;
- 	color: black !important;
+ 	color: rgba(0, 0, 0, 0.85) !important;
  }

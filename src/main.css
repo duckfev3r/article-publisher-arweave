@@ -1,7 +1,8 @@
 body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 	margin: 0px;
-	background-color: #fdfdfd
+	background-color: #fdfdfd;
+	overflow-y: scroll;
 }
 
 .page {

@@ -63,12 +63,12 @@ class CreateArticle extends React.Component<Props, State> {
 		this.api = new ApiService
 
 		this.setupBindings()
-	}
+	} 
 
 	componentDidMount() {
-		this.setState({
-			keystore: Keystore
-		})
+		// this.setState({
+		// 	keystore: Keystore
+		// })
 	}
 
 	setupBindings() {
@@ -260,8 +260,7 @@ class CreateArticle extends React.Component<Props, State> {
 							<CreateArticleButtons
 								handleClickOpen={this.sendClicked}
 							/>
-
-							<button onClick={()=> this.api.getAllArticles()}>search test txn</button>
+							{/* <button onClick={()=> this.api.getAllArticles()}>search test txn</button> */}
 
 						</div>
 				}

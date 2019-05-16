@@ -27,7 +27,6 @@ class ArticleIndex extends React.Component {
 		this.state = {
 			articles: null
 		}
-
 	}
 
 	componentDidMount() {

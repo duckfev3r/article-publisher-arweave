@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import Button from '@material-ui/core/Button/Button';
 
-import './create-article-buttons.css'
+import './createArticleButtons.css'
 import SendIcon from '@material-ui/icons/Send';
 
 type Props = {

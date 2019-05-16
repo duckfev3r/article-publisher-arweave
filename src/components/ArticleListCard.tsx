@@ -1,6 +1,5 @@
 import React from 'react';
-import './article-list-card.css'
-import { prefix } from '../services/ApiService';
+import './articleListCard.css'
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
@@ -33,7 +32,7 @@ function ArticleListCard(props: Props) {
                 </Link>
             </h2>
             <div className="tags-heading">
-                <i>TAGS</i>
+                {/* <i>TAGS</i> */}
             </div>
             {scribe_tags.map((tag: any, index: number) => {
                 return <Chip
@@ -48,7 +47,6 @@ function ArticleListCard(props: Props) {
                 {synopsis}
             </p>
             <div>
-                <Divider />
             </div>
         </div>
 

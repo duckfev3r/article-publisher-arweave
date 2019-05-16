@@ -10,6 +10,7 @@
     "@types/material-ui": "^0.21.6",
     "@types/quill": "^2.0.2",
     "@types/react-router-dom": "^4.3.3",
+    "@types/sanitize-html": "^1.18.3",
     "arweave": "^1.3.1",
     "file-loader": "^3.0.1",
     "quill": "^1.3.6",
@@ -19,6 +20,7 @@
     "react-quill": "^1.3.3",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "sanitize-html": "^1.20.1",
     "throttle-debounce": "^2.1.0",
     "url-loader": "^1.1.2"
   },

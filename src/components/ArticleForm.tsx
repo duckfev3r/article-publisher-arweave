@@ -92,6 +92,32 @@ class ArticleForm extends React.Component<Props> {
                     variant="outlined"
                     id="custom-css-outlined-input"
                 />
+                <TextField
+                    className="article-create-title-input"
+                    id="outlined-full-width"
+                    InputLabelProps={{
+                        shrink: true,
+                        classes: {
+                            root: this.classes.cssLabel,
+                            focused: this.classes.cssFocused,
+                        },
+                    }}
+                    InputProps={{
+                        classes: {
+                            root: this.classes.cssOutlinedInput,
+                            focused: this.classes.cssFocused,
+                            notchedOutline: this.classes.notchedOutline,
+                        }
+                    }}
+                    label="Tagline"
+                    placeholder="Introduce your article..."
+                    margin="normal"
+                    variant="outlined"
+                    autoComplete="off"
+                    // onChange={checkField}
+                    // value={field}
+                    // helperText="Adding detailed Tags will help people find your article."
+                />
                 <ReactQuill
                     theme='snow'
                     value={this.props.body}

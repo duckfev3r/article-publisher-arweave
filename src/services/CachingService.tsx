@@ -20,7 +20,7 @@ export default class CachingService {
 	public getDocument(key: string) {
 		const componentKey = this._constructKey(key)
 		const document = sessionStorage.getItem(componentKey)
-		console.log(document)
+		// console.log(document)
 		return JSON.parse(decodeURI(document))
 	}
 

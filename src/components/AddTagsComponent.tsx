@@ -20,7 +20,7 @@ const AddTagsComponent = (props: any) => {
     }
 
     const updateTagField = (field: string) => {
-        if (field && field.length > 1) {
+        if (field && field.length > 1 && field.length < 15) {
             callback(field)
             setField('')
         }

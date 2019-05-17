@@ -2,6 +2,7 @@ import React from 'react';
 import './articleListCard.css'
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
+import unixToDateTime from '../utils/datetime'
 import { Link } from 'react-router-dom';
 
 type Props = {
@@ -10,18 +11,17 @@ type Props = {
 
 function ArticleListCard(props: Props) {
     const { scribe_data, scribe_tags } = props.article;
-
-    const { synopsis, title } = {
-            synopsis: scribe_data[0].value,
-            title: scribe_data[2].value
-        }
+    const { synopsis, title, tagline } = {
+        synopsis: scribe_data[0].value,
+        title: scribe_data[2].value,
+        tagline: scribe_data[3].value
+    }
 
     const chipValue = () => {
         let str = ''
         scribe_tags.forEach((tag: any, index: number) => {
             str += (index + 1 !== scribe_tags.length ? `${tag.value} • ` : `${tag.value} `).toUpperCase()
         })
-        console.log(str)
         return str
     }
     return (
@@ -31,23 +31,25 @@ function ArticleListCard(props: Props) {
                     {title}
                 </Link>
             </h2>
-            <div className="tags-heading">
-                {/* <i>TAGS</i> */}
-            </div>
-            {scribe_tags.map((tag: any, index: number) => {
-                return <Chip
-                            key={tag.value}
-                            onClick={() => console.log('clicked')}
-                            label={tag.value.toUpperCase()}
-                            className="chip"
-                            variant="outlined"
-                        />
-            })}
+            {/* <div className="tags-heading">
+                {tagline}
+            </div> */}
             <p>
                 {synopsis}
             </p>
-            <div>
+            <div className='list-date'>
+                {unixToDateTime(props.article.unixTime)}
             </div>
+            {scribe_tags.map((tag: any, index: number) => {
+                return <Chip
+                    key={tag.value}
+                    // onClick={() => console.log('clicked')}
+                    label={tag.value.toUpperCase()}
+                    className="chip"
+                    variant="outlined"
+                />
+            })}
+
         </div>
 
     );

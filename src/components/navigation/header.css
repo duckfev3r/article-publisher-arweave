@@ -26,9 +26,9 @@
 }
 
 .header-image img {
-	height: 70px;
-	width: 70px;
-	margin: 5px;
+	height: 60px;
+	/* width: 70px; */
+	margin-top: 10px;
 }
 
 .header-button-container {

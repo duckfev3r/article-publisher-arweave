@@ -34,18 +34,18 @@ class ArticleIndex extends React.Component {
 	}
 
 	async getArticles() {
-		console.log('getting articles....')
 		const cachedArticles = this.cache.getDocument('index')
-		console.log('cached articles', cachedArticles)
-		if (cachedArticles) {
+		// if (cachedArticles && cachedArticles.length > 0) {
+		if (false) {
 			this.setState({ articles: cachedArticles })
 		} else {
-			console.log('else fired')
 			this.api.getAllArticles().then((articles: any) => {
+				articles = articles.sort((a: any,b: any) => {
+					return b.unixTime - a.unixTime
+				})
 				if (articles.tx_status && articles.tx.status.status !== 200) {
 					throw (articles.tx_status.status)
 				}
-				console.log(articles)
 				this.setState({ articles })
 				this.cache.setDocument('index', articles)
 			}).catch((err: any) => {

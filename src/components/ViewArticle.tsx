@@ -11,7 +11,6 @@ const ViewArticle = (props: any) => {
 	const { match } = props
 	const api = new ApiService
 	const [articleData, setArticleData] = useState()
-	console.log(props)
 	useEffect(() => {
 		const cachedArticle = cache.getDocument(match.params.id)
 		if (cachedArticle) {
@@ -35,6 +34,7 @@ const ViewArticle = (props: any) => {
 						<h1>
 							{articleData.title}
 						</h1>
+						<div className='view-article-tagline'></div>
 						<div>{ ReactHtmlParser(articleData.body) }</div>
 					</div>
 					: <LoadingComponent message="Fetching your Article." />

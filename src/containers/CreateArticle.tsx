@@ -20,7 +20,7 @@ import InvalidFieldDialogue from '../components/InvalidFieldDialogue'
 import AddTagsComponent from '../components/AddTagsComponent';
 import TagsListComponent from '../components/TagsListComponent';
 
-export interface Props extends WithStyles<typeof CreateArticleStyles> { }
+type Props = any
 
 type State = {
 	content: IArticleContent,
@@ -36,7 +36,7 @@ class CreateArticle extends React.Component<Props, State> {
 	api: ApiService
 	quillEditor: any
 
-	constructor(props: Props) {
+	constructor(props: any) {
 		super(props)
 
 		this.state = {
@@ -105,7 +105,6 @@ class CreateArticle extends React.Component<Props, State> {
 			this.setState({
 				keystore: JSON.parse(content)
 			})
-			console.log(content)
 			// testTxn(JSON.parse(content))
 		}
 		fileReader.readAsText(file)
@@ -118,7 +117,6 @@ class CreateArticle extends React.Component<Props, State> {
 	}
 
 	toggleSendDialogue() {
-		console.log(this.state.content)
 		const sendDialogueOpen = this.state.sendDialogueOpen ? false : true
 		this.setState({
 			sendDialogueOpen
@@ -132,9 +130,9 @@ class CreateArticle extends React.Component<Props, State> {
 		}
 		article.content.stringBody = this.quillEditor.getText()
 		try {
-			this.api.postArticle(article, this.state.keystore)
+			await this.api.postArticle(article, this.state.keystore)
+			this.props.history.push('/')
 		} catch(er) {
-			console.log(er)
 		}
 		this.toggleSendDialogue()
 	}
@@ -142,7 +140,6 @@ class CreateArticle extends React.Component<Props, State> {
 	checkFields(state: any, quill: any): boolean {
 		const { title, tagline } = state.content
 		const tags = state.meta.tags
-		console.log(state)
 		let alertTitle = ''
 		let alertBody = ''
 
@@ -152,24 +149,24 @@ class CreateArticle extends React.Component<Props, State> {
 			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
 			return
 		}
-		if (!tagline) {
-			alertTitle = 'Invalid Tagline'
-			alertBody = 'You must give your article a tagline before proceeding.'
+		if (title.length < 10 && title.length > 60) {
+			alertTitle = 'Title wrong length'
+			alertBody = 'The title of your article must be between 10 and 60 characters long.'
 			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
 			return
 		}
-		if (tagline.length < 15 || tagline.length > 60) {
-			alertTitle = 'Tagline Wrong Length'
-			alertBody = 'Your tagline must be between 15 and 60 characters long.'
-			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
-			return
-		}
-		if (title.length < 10) {
-			alertTitle = 'Title too short'
-			alertBody = 'The title of your article must be at least 10 characters long.'
-			this.toggleInvalidFieldDialogue(alertTitle, alertBody)
-			return
-		}
+		// if (!tagline) {
+		// 	alertTitle = 'Invalid Tagline'
+		// 	alertBody = 'You must give your article a tagline before proceeding.'
+		// 	this.toggleInvalidFieldDialogue(alertTitle, alertBody)
+		// 	return
+		// }
+		// if (tagline.length < 15 || tagline.length > 120) {
+		// 	alertTitle = 'Tagline Wrong Length'
+		// 	alertBody = 'Your tagline must be between 15 and 120 characters long.'
+		// 	this.toggleInvalidFieldDialogue(alertTitle, alertBody)
+		// 	return
+		// }
 		if (quill.getText().length < 200) {
 			alertTitle = 'Article is too short'
 			alertBody = 'The article must be at least 200 characters long.'
@@ -219,8 +216,8 @@ class CreateArticle extends React.Component<Props, State> {
 	}
 
 	updateTagField(tag: string) {
-		if (this.state.meta.tags.length < 10) {
-			const meta = this.state.meta
+		const meta = this.state.meta
+		if (this.state.meta.tags.length < 10 && meta.tags.indexOf(tag) === -1) {
 			meta.tags.push(tag)
 			this.setState({
 				meta
@@ -229,7 +226,6 @@ class CreateArticle extends React.Component<Props, State> {
 	}
 
 	removeTag(tag: string){
-		console.log(tag)
 		const tags = this.state.meta.tags
 		const index = tags.indexOf(tag)
 		if (index > -1) {

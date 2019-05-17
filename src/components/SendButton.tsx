@@ -26,7 +26,6 @@ class SendButton extends React.Component<State, Props> {
 	}
 
 	handleClickOpen() {
-		console.log('handle click open')
 		this.setState({ open: true });
 	};
 

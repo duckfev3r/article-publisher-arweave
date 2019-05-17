@@ -4,15 +4,17 @@ import { IArticle } from '../types/types';
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
 
-const envDevPrefix = 'scribe-alpha-dev-00'
+const envDevPrefix = 'scribe-alpha-dev-01'
 const envProdPrefix = 'scribe'
 
 const prefix = envDevPrefix
 
 export default class ApiService {
 
-	private createSynopsis(body: string) {
-		return `${body.slice(0, 200)} ...`
+	public createSynopsis(body: string) {
+		let position = body.indexOf('.', 100)
+		let str = `${body.slice(0, position)}...`
+		return str
 	}
 
 	public async postArticle(article: IArticle, wallet: any, awv: any = arweave) {
@@ -89,6 +91,7 @@ export default class ApiService {
 							if (
 								key === `${prefix}-synopsis` ||
 								key === `${prefix}-title` ||
+								key === `${prefix}-tagline` ||
 								key === `${prefix}-id`) {
 								value = decodeURI(value)
 								tx_row.scribe_data.push({ key, value })
@@ -114,7 +117,6 @@ export default class ApiService {
 
 					return tx_row
 				}))
-			console.log(tx_rows);
 		}
 		return tx_rows
 	}
@@ -124,6 +126,7 @@ export default class ApiService {
 		tx.addTag('App-Name', `${prefix}`)
 		tx.addTag(`${prefix}-id`, this.randomString())
 		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))
+		tx.addTag(`${prefix}-tagline`, encodeURI(article.content.tagline))
 		tx.addTag('App-Version', '0.0.0')
 		tx.addTag('Unix-Time', this.getTime())
 		return tx

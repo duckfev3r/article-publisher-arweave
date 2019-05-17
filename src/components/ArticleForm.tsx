@@ -93,7 +93,7 @@ class ArticleForm extends React.Component<Props> {
                     variant="outlined"
                     id="custom-css-outlined-input"
                 />
-                <TextField
+                {/* <TextField
                     className="article-create-title-input"
                     id="outlined-full-width"
                     InputLabelProps={{
@@ -118,7 +118,7 @@ class ArticleForm extends React.Component<Props> {
                     onChange={this.props.taglineChange}
                     // value={field}
                     // helperText="Adding detailed Tags will help people find your article."
-                />
+                /> */}
                 <ReactQuill
                     theme='snow'
                     value={this.props.body}

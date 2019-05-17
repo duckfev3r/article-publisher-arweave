@@ -4,7 +4,7 @@ import { IArticle } from '../types/types';
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
 
-const envDevPrefix = 'scribe-alpha-dev-01'
+const envDevPrefix = 'scribe-alpha-00'
 const envProdPrefix = 'scribe'
 
 const prefix = envDevPrefix

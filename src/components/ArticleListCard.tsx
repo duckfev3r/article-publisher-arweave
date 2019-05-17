@@ -11,10 +11,9 @@ type Props = {
 
 function ArticleListCard(props: Props) {
     const { scribe_data, scribe_tags } = props.article;
-    const { synopsis, title, tagline } = {
+    const { synopsis, title } = {
         synopsis: scribe_data[0].value,
-        title: scribe_data[2].value,
-        tagline: scribe_data[3].value
+        title: scribe_data[2].value
     }
 
     const chipValue = () => {

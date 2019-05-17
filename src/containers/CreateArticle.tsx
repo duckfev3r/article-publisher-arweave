@@ -65,11 +65,11 @@ class CreateArticle extends React.Component<Props, State> {
 		this.setupBindings()
 	}
 
-	componentDidMount() {
-		this.setState({
-			keystore: Keystore
-		})
-	}
+	// componentDidMount() {
+	// 	this.setState({
+	// 		keystore: Keystore
+	// 	})
+	// }
 
 	setupBindings() {
 		this.handleContentChange = this.handleContentChange.bind(this)

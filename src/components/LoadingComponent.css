@@ -5,12 +5,19 @@
 	top: 35%;
 	right: 0px;
 	text-align: center;
+	color: rgba(0,0,0,0.7);
 }
 
 .loading-message {
+	color: rgba(0,0,0,0.7);
 	/* min-height:500px; */
 	min-width: 100%;
 	margin: 0 auto;
 	/* text-align: center !important; */
 	/* margin-bottom: 50% */
+}
+
+.loading-message h2 {
+	font-family: 'Courier New', Courier, monospace;
+	color: rgba(0,0,0,0.7);
 }

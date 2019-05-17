@@ -1,3 +1,3 @@
 # article-publisher-arweave
 
-Article Publishing Platform build for Arweave using React & Typescript
+Article Publishing Application built for Arweave Platform using Typescript & React.

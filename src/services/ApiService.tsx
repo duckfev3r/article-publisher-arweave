@@ -1,11 +1,12 @@
 import Arweave from 'arweave/web'
 import { IArticle } from '../types/types';
+import sanitize from '../utils/sanitizeHtml';
 
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
 
-const envDevPrefix = 'scribe-alpha-00'
-const envProdPrefix = 'scribe'
+const envDevPrefix = 'scribe-alpha-dev-00'
+const envProdPrefix = 'scribe-alpha-00'
 
 const prefix = envDevPrefix
 
@@ -58,6 +59,7 @@ export default class ApiService {
 					tx.get('data', { decode: true, string: true })
 				)
 			)
+			data.body = data.body ? sanitize(data.body) : null
 			return data
 		}
 		catch (err) {
@@ -127,7 +129,7 @@ export default class ApiService {
 		tx.addTag(`${prefix}-id`, this.randomString())
 		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))
 		tx.addTag(`${prefix}-tagline`, encodeURI(article.content.tagline))
-		tx.addTag('App-Version', '0.0.0')
+		tx.addTag('App-Version', '0.0.1')
 		tx.addTag('Unix-Time', this.getTime())
 		return tx
 	}

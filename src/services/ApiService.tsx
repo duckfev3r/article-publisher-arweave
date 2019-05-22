@@ -8,7 +8,7 @@ const arweave = Arweave.init(
 const envDevPrefix = 'scribe-alpha-dev-00'
 const envProdPrefix = 'scribe-alpha-00'
 
-const prefix = envDevPrefix
+const prefix = envProdPrefix
 
 export default class ApiService {
 
@@ -59,6 +59,7 @@ export default class ApiService {
 					tx.get('data', { decode: true, string: true })
 				)
 			)
+			console.log(data)
 			data.body = data.body ? sanitize(data.body) : null
 			return data
 		}

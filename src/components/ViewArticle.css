@@ -8,6 +8,10 @@
 	min-width: 100%;
 }
 
+p {
+	margin: 0;
+}
+
 .article-display {
 	max-height: none;
 }

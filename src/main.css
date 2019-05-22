@@ -85,6 +85,14 @@ body {
 	font-weight: 400
 }
 
+.ql-editor>blockquote {
+	margin-top: 70px;
+	margin-bottom: 70px;
+	letter-spacing: 2.2px;
+	line-height: 25px;
+	font-size: 1.2em;
+}
+
 .button {
 	margin: 3px,
 }
@@ -106,6 +114,26 @@ body {
 	width: 100%;
 	max-width: 750px;
 }
+
+li {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: 1.3em;
+	line-height: 1.7em;
+}
+
+blockquote {
+	margin-top: 70px;
+	margin-bottom: 70px;
+	letter-spacing: 2.2px;
+	line-height: 35px;
+	font-size: 1.4em;
+}
+
+/* blockquote em {
+	letter-spacing: 2.2px;
+	line-height: 25px;
+	font-size: 1.2em;
+} */
 
 .tags-list-container {
 	min-height: 50px;

@@ -21,8 +21,16 @@ const opts = {
     allowProtocolRelative: true,
 }
 
+// function _tidyUpHtml(content: string) {
+//     return content.replace('<p><br /></p>', '')
+// }
+
 export default function sanitize(content: string): string {
-    return sanitizeHtml(content, opts)
+    return sanitizeHtml(
+        // _tidyUpHtml(content),
+        content,
+        opts
+    )
 }
 
 

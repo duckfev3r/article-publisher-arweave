@@ -28,6 +28,10 @@ class ArticleIndex extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		this.getArticles()
+	}
+
 	async getArticles() {
 		const cachedDocuments = this.cache.getDocument('index')
 		if (cachedDocuments) {

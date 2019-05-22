@@ -9,10 +9,9 @@ import Header from './components/navigation/Header';
 
 const routing = (
 	<Router>
-		<div>
+		<div className="container">
 			<Header navLinks={navLinks} />
 			<Switch>
-
 				{
 					navLinks.map((link) => {
 						return (

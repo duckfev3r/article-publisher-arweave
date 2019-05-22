@@ -2,19 +2,21 @@ import React, { useState, useEffect } from 'react';
 import ApiService from '../services/ApiService'
 import ReactHtmlParser from 'react-html-parser';
 import LoadingComponent from './LoadingComponent'
-import * as sanitize from 'sanitize-html'
 import './viewArticle.css'
+import ErrorComponent from './ErrorComonent';
 
 const ViewArticle = (props: any) => {
 	const { match } = props
 	const api = new ApiService
 
 	const [articleData, setArticleData] = useState()
+	const [error, setError] = useState()
+
 	useEffect(() => {
 		api.getArticleData(match.params.id).then((data: any) => {
 			setArticleData(data);
 		}).catch(err => {
-			setArticleData(err)
+			setError(err)
 		})
 	}, []);
 
@@ -29,7 +31,12 @@ const ViewArticle = (props: any) => {
 						<div className='view-article-tagline'></div>
 						<div>{ReactHtmlParser(articleData.body)}</div>
 					</div>
-					: <LoadingComponent message="Fetching your Article." />
+					:
+					error
+						?
+						<ErrorComponent message={error.message} />
+						:
+						<LoadingComponent message="Fetching your Article." />
 			}
 		</div>
 	)

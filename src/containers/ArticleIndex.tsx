@@ -4,6 +4,7 @@ import ArticleListCard from '../components/ArticleListCard';
 import './ArticleIndex.css'
 import CachingService from '../services/CachingService';
 import LoadingComponent from '../components/LoadingComponent';
+import ErrorComponent from '../components/ErrorComonent';
 
 type State = {
 	list: any[],
@@ -27,11 +28,11 @@ class ArticleIndex extends React.Component {
 		}
 	}
 
-	componentDidMount() {
-		this.getArticles()
-	}
-
 	async getArticles() {
+		const cachedDocuments = this.cache.getDocument('index')
+		if (cachedDocuments) {
+			this.setState({ list: cachedDocuments })
+		}
 		this.api.getAllArticles().then((articles: any) => {
 			console.log(articles)
 			articles = articles.sort((a: any, b: any) => {
@@ -43,13 +44,7 @@ class ArticleIndex extends React.Component {
 			this.setState({ list: articles })
 			this.cache.setDocument('index', articles)
 		}).catch((err: any) => {
-			this.setState({ err },
-				() => {
-					console.log(err.Error)
-					console.log(typeof err)
-					console.log(this.state.err)
-					console.log(this.state)
-				})
+			this.setState({ err })
 		})
 	}
 
@@ -68,7 +63,12 @@ class ArticleIndex extends React.Component {
 							/>
 						</div>
 					)
-				}) : err.message ? <h1>{err.message}</h1> : <LoadingComponent message={'Loading Articles...'} />
+				})
+				:
+				err.message ?
+					<ErrorComponent message={err.message}/>
+					:
+					<LoadingComponent message={'Loading Articles...'} />
 		)
 	}
 }

@@ -133,6 +133,7 @@ class CreateArticle extends React.Component<Props, State> {
 			await this.api.postArticle(article, this.state.keystore)
 			this.props.history.push('/')
 		} catch(er) {
+			// Need to display the error dialogue here
 		}
 		this.toggleSendDialogue()
 	}

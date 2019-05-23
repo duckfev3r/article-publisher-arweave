@@ -19,11 +19,11 @@ Article Publishing Application built for Arweave Platform using Typescript & Rea
 
 - Clean up ApiService
 - Better Typescript Coverage
-- Redux Integration
+- Unit Tests
+- Redux
 - Tipping & Upvoting
 - Profiles
 - Article Thumbnails
 - Improved Typography
-
-
-
+- Better Validation of incoming data
+- More efficient API usage

@@ -2,6 +2,8 @@
 
 Article Publishing Application built for Arweave Platform using Typescript & React, written in a rush to pick up the generous gitcoin.co bounty - https://gitcoin.co/issue/ArweaveTeam/Bounties/1/2929
 
+Current Working Version can be found at http://scribe.permanently.online
+
 ## changelog
 
 ### 0.0.1

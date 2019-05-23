@@ -1,5 +1,4 @@
 import * as sanitizeHtml from 'sanitize-html'
-import ReactHtmlParser from 'react-html-parser';
 
 const opts = {
     allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
@@ -21,10 +20,15 @@ const opts = {
     allowProtocolRelative: true,
 }
 
+const unwantedStrings = ['<p><br></p>', '<p><br /></p>']
+
 function _tidyUpHtml(content: string) {
-    // return content
-    return content.split('<p><br /></p>').join('');
-    // return content.replace('a', '')
+    unwantedStrings.forEach(string => {
+        while (content.indexOf(string) > -1) {
+        content = content.replace(string, '')
+        }
+    })
+    return content
 }
 
 export default function sanitize(content: string): string {

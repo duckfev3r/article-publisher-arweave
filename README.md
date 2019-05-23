@@ -4,7 +4,18 @@ Article Publishing Application built for Arweave Platform using Typescript & Rea
 
 ## changelog
 
-### Coming in a Future Release / Wishlist
+### 0.0.1
+
+- Error handling in a couple of views
+- Fixed XSS security Vulnerability
+- Added some styling to the WYSIWYG editor
+- HashFragment Links (allows deeplinking)
+
+### 0.0.0
+
+- First release, warts and all :)
+
+## Coming in a Future Release / Wishlist
 
 - Clean up ApiService
 - Better Typescript Coverage
@@ -13,16 +24,6 @@ Article Publishing Application built for Arweave Platform using Typescript & Rea
 - Profiles
 - Article Thumbnails
 - Improved Typography
-
-### 0.0.1
-
-- Error handling in a couple of views
-- Fixed XSS security Vulnerability
-- Added some styling to the WYSIWYG editor
-
-### 0.0.0
-
-- First release, warts and all :)
 
 
 

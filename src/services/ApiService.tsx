@@ -60,7 +60,7 @@ export default class ApiService {
 				)
 			)
 			console.log(data)
-			data.body = data.body ? sanitize(data.body) : null
+			data.body = sanitize(data.body)
 			return data
 		}
 		catch (err) {

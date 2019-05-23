@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ApiService from '../services/ApiService'
 import ReactHtmlParser from 'react-html-parser';
-import LoadingComponent from './LoadingComponent'
+import LoadingComponent from './common/LoadingComponent'
 import './viewArticle.css'
-import ErrorComponent from './ErrorComonent';
+import ErrorComponent from './common/ErrorComonent';
 
 const ViewArticle = (props: any) => {
 	const { match } = props

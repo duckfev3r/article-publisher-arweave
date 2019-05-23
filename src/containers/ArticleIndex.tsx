@@ -3,8 +3,8 @@ import ApiService from '../services/ApiService'
 import ArticleListCard from '../components/ArticleListCard';
 import './ArticleIndex.css'
 import CachingService from '../services/CachingService';
-import LoadingComponent from '../components/LoadingComponent';
-import ErrorComponent from '../components/ErrorComonent';
+import LoadingComponent from '../components/common/LoadingComponent';
+import ErrorComponent from '../components/common/ErrorComonent';
 
 type State = {
 	list: any[],

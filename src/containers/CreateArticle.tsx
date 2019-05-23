@@ -79,9 +79,9 @@ class CreateArticle extends React.Component<Props, State> {
 		this.sendClicked = this.sendClicked.bind(this)
 		this.toggleInvalidFieldDialogue = this.toggleInvalidFieldDialogue.bind(this)
 		this.handleTitleChange = this.handleTitleChange.bind(this)
-		this.removeTag = this.removeTag.bind(this)
-		this.updateTagField = this.updateTagField.bind(this)
-		this.handleTaglineChange = this.handleTaglineChange.bind(this)
+		this.removeTag.bind(this)
+		this.updateTagField.bind(this)
+		this.handleTaglineChange.bind(this)
 	}
 
 	handleContentChange(html: any) {

@@ -1,29 +1,21 @@
 import Arweave from 'arweave/web'
 import { IArticle } from '../types/types';
-import sanitize from '../utils/sanitizeHtml';
 
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
 
-const envDevPrefix = 'scribe-alpha-dev-00'
-const envProdPrefix = 'scribe-alpha-00'
+const envDevPrefix = 'ipseity-alpha-dev-00'
+const envProdPrefix = 'ipseity-alpha-00'
 
-const prefix = envProdPrefix
+const prefix = envDevPrefix
 
 export default class ApiService {
-
-	public createSynopsis(body: string) {
-		let position = body.indexOf('.', 100)
-		let str = `${body.slice(0, position)}...`
-		return str
-	}
 
 	public async postArticle(article: IArticle, wallet: any, awv: any = arweave) {
 		let tx = await awv.createTransaction({
 			data: encodeURI(JSON.stringify(article.content))
 		}, wallet)
 		this.addAppMetaTags(tx, article)
-		this.addContentTags(tx, article.meta.tags)
 		try {
 			await awv.transactions.sign(tx, wallet)
 			const post = await awv.transactions.post(tx)
@@ -51,7 +43,7 @@ export default class ApiService {
 		}
 	}
 
-	public async getArticleData(id: string, awv: any = arweave) {
+	public async getProfileData(id: string, awv: any = arweave) {
 		try {
 			const tx = await awv.transactions.get(id)
 			const data = JSON.parse(
@@ -60,7 +52,6 @@ export default class ApiService {
 				)
 			)
 			console.log(data)
-			data.body = sanitize(data.body)
 			return data
 		}
 		catch (err) {
@@ -125,20 +116,12 @@ export default class ApiService {
 	}
 
 	private addAppMetaTags(tx: any, article: IArticle) {
-		tx.addTag(`${prefix}-synopsis`, encodeURI(this.createSynopsis(article.content.stringBody)))
 		tx.addTag('App-Name', `${prefix}`)
 		tx.addTag(`${prefix}-id`, this.randomString())
 		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))
 		tx.addTag(`${prefix}-tagline`, encodeURI(article.content.tagline))
 		tx.addTag('App-Version', '0.0.1')
 		tx.addTag('Unix-Time', this.getTime())
-		return tx
-	}
-
-	private addContentTags(tx: any, tags: string[]) {
-		tags.forEach((tag: string, index: number) => {
-			tx.addTag(`${prefix}-tag-${index}`, tag)
-		})
 		return tx
 	}
 

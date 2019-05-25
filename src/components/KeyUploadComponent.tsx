@@ -1,6 +1,6 @@
 import React from 'react'
 
-import CreateArticleStyles from '../containers/CreateProfileStyles'
+import CreateArticleStyles from '../containers/CreateArticleStyles'
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button/Button';
 

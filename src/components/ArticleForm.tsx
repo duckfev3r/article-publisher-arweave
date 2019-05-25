@@ -1,8 +1,28 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField';
 
-import CreateArticleStyles from '../containers/CreateProfileStyles'
+import CreateArticleStyles from '../containers/CreateArticleStyles'
 import { withStyles } from '@material-ui/core';
+import ReactQuill from 'react-quill';
+
+const modules: any = {
+    toolbar: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['image'],
+        [{ 'align': [] }],
+        ['code-block'],
+        ['clean']
+    ],
+}
+
+const formats: any = [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet',
+    'link', 'image', 'align', 'code-block'
+]
 
 type Props = {
     callback: any
@@ -28,6 +48,25 @@ class ArticleForm extends React.Component<Props> {
         this.quillRef = null;      // Quill instance
         this.reactQuillRef = null; // ReactQuill component
 
+        this.attachQuillRefs = this.attachQuillRefs.bind(this)
+    }
+
+    componentDidMount() {
+        this.attachQuillRefs()
+
+    }
+
+    componentDidUpdate() {
+        this.attachQuillRefs()
+    }
+
+    attachQuillRefs() {
+        if (typeof this.reactQuillRef.getEditor !== 'function') return;
+        this.quillRef = this.reactQuillRef.getEditor();
+        if (!this.initialized) {
+            this.props.editorCallback(this.quillRef)
+        }
+        this.initialized = true;
     }
 
     render() {
@@ -54,7 +93,7 @@ class ArticleForm extends React.Component<Props> {
                     variant="outlined"
                     id="custom-css-outlined-input"
                 />
-                <TextField
+                {/* <TextField
                     className="article-create-title-input"
                     id="outlined-full-width"
                     InputLabelProps={{
@@ -79,6 +118,14 @@ class ArticleForm extends React.Component<Props> {
                     onChange={this.props.taglineChange}
                     // value={field}
                     // helperText="Adding detailed Tags will help people find your article."
+                /> */}
+                <ReactQuill
+                    theme='snow'
+                    value={this.props.body}
+                    onChange={this.props.callback}
+                    modules={modules}
+                    formats={formats}
+                    ref={(el) => { this.reactQuillRef = el }}
                 />
             </div>
         )

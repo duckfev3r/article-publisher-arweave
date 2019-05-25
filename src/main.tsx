@@ -5,10 +5,12 @@ import { Route, Link, HashRouter as Router, Switch, Redirect } from 'react-route
 import './main.css';
 
 import navLinks from './components/navigation/navLinks'
+import Header from './components/navigation/Header';
 
 const routing = (
 	<Router>
 		<div className="container">
+			<Header navLinks={navLinks} />
 			<Switch>
 				{
 					navLinks.map((link) => {

@@ -1,6 +1,9 @@
 import Arweave from 'arweave/web'
 import { IArticle } from '../types/types';
+<<<<<<< HEAD
 import sanitize from '../utils/sanitizeHtml';
+=======
+>>>>>>> parent of b6793e3... renaming things..
 
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
@@ -12,18 +15,24 @@ const prefix = envProdPrefix
 
 export default class ApiService {
 
+<<<<<<< HEAD
 	public createSynopsis(body: string) {
 		let position = body.indexOf('.', 100)
 		let str = `${body.slice(0, position)}...`
 		return str
 	}
 
+=======
+>>>>>>> parent of b6793e3... renaming things..
 	public async postArticle(article: IArticle, wallet: any, awv: any = arweave) {
 		let tx = await awv.createTransaction({
-			data: encodeURI(JSON.stringify(profile.data))
+			data: encodeURI(JSON.stringify(article.content))
 		}, wallet)
 		this.addAppMetaTags(tx, article)
+<<<<<<< HEAD
 		this.addContentTags(tx, article.meta.tags)
+=======
+>>>>>>> parent of b6793e3... renaming things..
 		try {
 			await awv.transactions.sign(tx, wallet)
 			const post = await awv.transactions.post(tx)
@@ -35,28 +44,7 @@ export default class ApiService {
 		}
 	}
 
-	getLatestProfileList(awv: any = arweave) {
-		try {
-			const queryResult = this.queryProfiles(awv)
-			const filteredInvalidData = this.filterData(queryResult)
-			const filteredOldData = this.filterOldProfiles(filteredInvalidData)
-			return this.createRows(filteredOldData)
-		} catch (err) {
-			return { err }
-		}
-	}
-
-	// Filter out Data whose rules violate our parameters.
-	filterData(data: any) {
-
-	}
-
-	filterOldProfiles(data: any) {
-
-	}
-
-
-	public async queryProfiles(awv: any = arweave) {
+	public async getAllArticles(awv: any = arweave) {
 		let query =
 		{
 			op: 'equals',
@@ -65,8 +53,7 @@ export default class ApiService {
 		}
 		try {
 			const res = await awv.api.post(`arql`, query)
-			console.log('get all profiles res', res)
-			return res
+			return this.createRows(res)
 		}
 		catch (err) {
 			return { err }
@@ -82,7 +69,10 @@ export default class ApiService {
 				)
 			)
 			console.log(data)
+<<<<<<< HEAD
 			data.body = sanitize(data.body)
+=======
+>>>>>>> parent of b6793e3... renaming things..
 			return data
 		}
 		catch (err) {
@@ -111,7 +101,7 @@ export default class ApiService {
 						tx_row.scribe_data = []
 						tx_row.scribe_tags = []
 						tags.forEach((tag: any) => {
-							let key: string = tag.get('name', { decode: true, string: true })
+							let key = tag.get('name', { decode: true, string: true })
 							let value: string = tag.get('value', { decode: true, string: true })
 							if (
 								key === `${prefix}-synopsis` ||
@@ -147,11 +137,15 @@ export default class ApiService {
 	}
 
 	private addAppMetaTags(tx: any, article: IArticle) {
+<<<<<<< HEAD
 		tx.addTag(`${prefix}-synopsis`, encodeURI(this.createSynopsis(article.content.stringBody)))
+=======
+>>>>>>> parent of b6793e3... renaming things..
 		tx.addTag('App-Name', `${prefix}`)
 		tx.addTag(`${prefix}-id`, this.randomString())
-		tx.addTag(`${prefix}-title`, encodeURI(profile.meta.title))
-		tx.addTag('App-Version', '0.0.0')
+		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))
+		tx.addTag(`${prefix}-tagline`, encodeURI(article.content.tagline))
+		tx.addTag('App-Version', '0.0.1')
 		tx.addTag('Unix-Time', this.getTime())
 		return tx
 	}
@@ -173,7 +167,7 @@ export default class ApiService {
 
 	private randomString() {
 		const chars = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		let result = '';
+		var result = '';
 		for (var i = 32; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
 		return result;
 	}

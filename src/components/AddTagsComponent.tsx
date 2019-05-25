@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import { withStyles, InputAdornment, IconButton } from '@material-ui/core';
-import CreateArticleStyles from '../containers/CreateProfileStyles';
+import CreateArticleStyles from '../containers/CreateArticleStyles';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 
 const AddTagsComponent = (props: any) => {

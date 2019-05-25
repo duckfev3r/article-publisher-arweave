@@ -8,28 +8,29 @@ export default interface INavLink {
 	nav: boolean
 }
 
-export interface IProfile {
-	meta: IProfileMeta
-	data: IProfileData
+export interface IArticle {
+	meta: IArticleMeta
+	content: IArticleContent
 }
 
 export type IArweaveTag = string
 
-export interface IProfileData {
-	banner: string
+export interface IArticleMeta {
+	tags: ArticleTag[]
+	uniqueId: string
 }
 
-export interface IProfileMeta {
-	pseudonym: string // 5 - 30 characters
-	title: string // 4 - 60 characters
-	about: string // 0 - 300 characters
-	location: string // 0 - 60
-	uniqueId: string // whatever this is (30 I think ???)
+export interface IArticleContent {
+	title: string
+	tagline: string
+	body: string
+	stringBody?: string
+	featuredImg?: IArticleImg
 }
 
-export type IProfileImgType = 'banner' | 'profile'
+export type ArticleTag = string
 
-export interface IProfileImg {
+export interface IArticleImg {
 	title: string
 	alt: string
 	url: string

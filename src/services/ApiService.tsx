@@ -1,5 +1,5 @@
 import Arweave from 'arweave/web'
-import { IArticle } from '../types/types';
+import { IProfile } from '../types/types';
 
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
@@ -11,11 +11,11 @@ const prefix = envDevPrefix
 
 export default class ApiService {
 
-	public async postArticle(article: IArticle, wallet: any, awv: any = arweave) {
+	public async postProfile(profile: IProfile, wallet: any, awv: any = arweave) {
 		let tx = await awv.createTransaction({
-			data: encodeURI(JSON.stringify(article.content))
+			data: encodeURI(JSON.stringify(profile.data))
 		}, wallet)
-		this.addAppMetaTags(tx, article)
+		this.addAppMetaTags(tx, profile)
 		try {
 			await awv.transactions.sign(tx, wallet)
 			const post = await awv.transactions.post(tx)
@@ -27,7 +27,28 @@ export default class ApiService {
 		}
 	}
 
-	public async getAllArticles(awv: any = arweave) {
+	getLatestProfileList(awv: any = arweave) {
+		try {
+			const queryResult = this.queryProfiles(awv)
+			const filteredInvalidData = this.filterData(queryResult)
+			const filteredOldData = this.filterOldProfiles(filteredInvalidData)
+			return this.createRows(filteredOldData)
+		} catch (err) {
+			return { err }
+		}
+	}
+
+	// Filter out Data whose rules violate our parameters.
+	filterData(data: any) {
+
+	}
+
+	filterOldProfiles(data: any) {
+
+	}
+
+
+	public async queryProfiles(awv: any = arweave) {
 		let query =
 		{
 			op: 'equals',
@@ -36,7 +57,8 @@ export default class ApiService {
 		}
 		try {
 			const res = await awv.api.post(`arql`, query)
-			return this.createRows(res)
+			console.log('get all profiles res', res)
+			return res
 		}
 		catch (err) {
 			return { err }
@@ -51,7 +73,7 @@ export default class ApiService {
 					tx.get('data', { decode: true, string: true })
 				)
 			)
-			console.log(data)
+			console.log('get profile data', data)
 			return data
 		}
 		catch (err) {
@@ -80,7 +102,7 @@ export default class ApiService {
 						tx_row.scribe_data = []
 						tx_row.scribe_tags = []
 						tags.forEach((tag: any) => {
-							let key = tag.get('name', { decode: true, string: true })
+							let key: string = tag.get('name', { decode: true, string: true })
 							let value: string = tag.get('value', { decode: true, string: true })
 							if (
 								key === `${prefix}-synopsis` ||
@@ -115,12 +137,11 @@ export default class ApiService {
 		return tx_rows
 	}
 
-	private addAppMetaTags(tx: any, article: IArticle) {
+	private addAppMetaTags(tx: any, profile: IProfile) {
 		tx.addTag('App-Name', `${prefix}`)
 		tx.addTag(`${prefix}-id`, this.randomString())
-		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))
-		tx.addTag(`${prefix}-tagline`, encodeURI(article.content.tagline))
-		tx.addTag('App-Version', '0.0.1')
+		tx.addTag(`${prefix}-title`, encodeURI(profile.meta.title))
+		tx.addTag('App-Version', '0.0.0')
 		tx.addTag('Unix-Time', this.getTime())
 		return tx
 	}
@@ -135,7 +156,7 @@ export default class ApiService {
 
 	private randomString() {
 		const chars = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		var result = '';
+		let result = '';
 		for (var i = 32; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
 		return result;
 	}

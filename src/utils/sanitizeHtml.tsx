@@ -34,7 +34,7 @@ const unwantedStrings = [
 function _tidyUpHtml(content: string) {
     unwantedStrings.forEach(string => {
         while (content.indexOf(string) > -1) {
-        content = content.replace(string, '')
+            content = content.replace(string, '')
         }
     })
     return content
@@ -43,7 +43,6 @@ function _tidyUpHtml(content: string) {
 export default function sanitize(content: string): string {
     return sanitizeHtml(
         _tidyUpHtml(content),
-        // content,
         opts
     )
 }

@@ -1,27 +1,24 @@
 import INavLink from "../../types/types";
-import ArticleIndex from "../../containers/ArticleIndex";
-import CreateArticle from "../../containers/CreateArticle";
-import ViewArticle from "../ViewArticle";
 
 const navLinks: INavLink[] = [
 	{
-		link: '/create',
-		title: 'Create',
-		component: CreateArticle,
+		link: '/update',
+		title: 'Update',
+		component: UpdateIdentity,
 		id: 2,
 		nav: true
 	},
 	{
 		link: '/',
-		title: 'Explore',
-		component: ArticleIndex,
+		title: 'Ipseity',
+		component: LandingPage,
 		id: 1,
 		nav: true
 	},
 	{
 		link: '/view/:id',
 		title: 'View',
-		component: ViewArticle,
+		component: ViewIdentity,
 		id: 3,
 		nav: false
 	}

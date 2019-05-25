@@ -20,16 +20,7 @@ const opts = {
     allowProtocolRelative: true,
 }
 
-const unwantedStrings = [
-    '<p><br></p>',
-    '<p><br /></p>',
-    '<h1><br></h1>',
-    '<h1><br /></h1>',
-    '<h2><br></h2>',
-    '<h2><br /></h2>',
-    '<h3><br></h3>',
-    '<h3><br /></h3>',
-]
+const unwantedStrings = ['<p><br></p>', '<p><br /></p>']
 
 function _tidyUpHtml(content: string) {
     unwantedStrings.forEach(string => {

@@ -1,4 +1,4 @@
-const _docPrefix = 'ipseity'
+const _docPrefix = 'scribe_'
 
 
 export default class CachingService {

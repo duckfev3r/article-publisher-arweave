@@ -1,9 +1,13 @@
 import Arweave from 'arweave/web'
 import { IArticle } from '../types/types';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import sanitize from '../utils/sanitizeHtml';
 =======
 >>>>>>> parent of b6793e3... renaming things..
+=======
+import sanitize from '../utils/sanitizeHtml';
+>>>>>>> parent of 8793c61... project setup
 
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
@@ -16,23 +20,33 @@ const prefix = envProdPrefix
 export default class ApiService {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 8793c61... project setup
 	public createSynopsis(body: string) {
 		let position = body.indexOf('.', 100)
 		let str = `${body.slice(0, position)}...`
 		return str
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> parent of b6793e3... renaming things..
+=======
+>>>>>>> parent of 8793c61... project setup
 	public async postArticle(article: IArticle, wallet: any, awv: any = arweave) {
 		let tx = await awv.createTransaction({
 			data: encodeURI(JSON.stringify(article.content))
 		}, wallet)
 		this.addAppMetaTags(tx, article)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		this.addContentTags(tx, article.meta.tags)
 =======
 >>>>>>> parent of b6793e3... renaming things..
+=======
+		this.addContentTags(tx, article.meta.tags)
+>>>>>>> parent of 8793c61... project setup
 		try {
 			await awv.transactions.sign(tx, wallet)
 			const post = await awv.transactions.post(tx)
@@ -70,9 +84,13 @@ export default class ApiService {
 			)
 			console.log(data)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			data.body = sanitize(data.body)
 =======
 >>>>>>> parent of b6793e3... renaming things..
+=======
+			data.body = sanitize(data.body)
+>>>>>>> parent of 8793c61... project setup
 			return data
 		}
 		catch (err) {
@@ -138,9 +156,13 @@ export default class ApiService {
 
 	private addAppMetaTags(tx: any, article: IArticle) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tx.addTag(`${prefix}-synopsis`, encodeURI(this.createSynopsis(article.content.stringBody)))
 =======
 >>>>>>> parent of b6793e3... renaming things..
+=======
+		tx.addTag(`${prefix}-synopsis`, encodeURI(this.createSynopsis(article.content.stringBody)))
+>>>>>>> parent of 8793c61... project setup
 		tx.addTag('App-Name', `${prefix}`)
 		tx.addTag(`${prefix}-id`, this.randomString())
 		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))

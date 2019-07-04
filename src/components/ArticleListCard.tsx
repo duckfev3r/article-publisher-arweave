@@ -6,7 +6,8 @@ import unixToDateTime from '../utils/datetime'
 import { Link } from 'react-router-dom';
 
 type Props = {
-    article: any
+    article: any,
+    onTagClick: (tag: string) => void
 }
 
 function ArticleListCard(props: Props) {
@@ -26,7 +27,7 @@ function ArticleListCard(props: Props) {
     return (
         <div className="article-list-card card">
             <h2>
-                <Link to={`view/${props.article.id}`}>
+                <Link to={`/view/${props.article.id}`}>
                     {title}
                 </Link>
             </h2>
@@ -40,12 +41,12 @@ function ArticleListCard(props: Props) {
                 {unixToDateTime(props.article.unixTime)}
             </div>
             {scribe_tags.map((tag: any, index: number) => {
-                return <Chip
+                return  <Chip
                     key={tag.value}
-                    // onClick={() => console.log('clicked')}
                     label={tag.value.toUpperCase()}
                     className="chip"
                     variant="outlined"
+                    onClick={() => { props.onTagClick(tag.value.toLowerCase()) }}
                 />
             })}
 

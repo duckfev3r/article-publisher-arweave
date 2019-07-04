@@ -26,6 +26,7 @@ export interface IArticleContent {
 	body: string
 	stringBody?: string
 	featuredImg?: IArticleImg
+	tags?:string[]
 }
 
 export type ArticleTag = string

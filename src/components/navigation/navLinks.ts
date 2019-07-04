@@ -19,6 +19,13 @@ const navLinks: INavLink[] = [
 		nav: true
 	},
 	{
+		link: '/explore/:tag',
+		title: 'Explore tag',
+		component: ArticleIndex,
+		id: 4,
+		nav: true
+	},
+	{
 		link: '/view/:id',
 		title: 'View',
 		component: ViewArticle,

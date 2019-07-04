@@ -1,6 +1,7 @@
 import Arweave from 'arweave/web'
 import { IArticle } from '../types/types';
 import sanitize from '../utils/sanitizeHtml';
+import { query as arqlQuery} from '../utils/arql';
 
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
@@ -44,6 +45,36 @@ export default class ApiService {
 		}
 		try {
 			const res = await awv.api.post(`arql`, query)
+			return this.createRows(res)
+		}
+		catch (err) {
+			return { err }
+		}
+	}
+
+	public async getArticlesByTag(tag: string, awv: any = arweave) {
+
+		let query =
+		{
+			op: 'and',
+			expr1: {
+				op: 'equals',
+				expr1: 'App-Name',
+				expr2: prefix
+			},
+			expr2: arqlQuery({
+				[prefix + '-tag']: tag,
+				[prefix + '-tag-0']: tag,
+				[prefix + '-tag-1']: tag,
+				[prefix + '-tag-2']: tag,
+				[prefix + '-tag-3']: tag,
+				[prefix + '-tag-4']: tag,
+				[prefix + '-tag-5']: tag,
+			},'or')
+		}
+
+		try {
+			const res = await awv.api.post(`arql`, query); 
 			return this.createRows(res)
 		}
 		catch (err) {
@@ -138,7 +169,7 @@ export default class ApiService {
 
 	private addContentTags(tx: any, tags: string[]) {
 		tags.forEach((tag: string, index: number) => {
-			tx.addTag(`${prefix}-tag-${index}`, tag)
+			tx.addTag(`${prefix}-tag`, tag)
 		})
 		return tx
 	}

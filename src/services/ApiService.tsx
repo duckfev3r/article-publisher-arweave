@@ -1,6 +1,8 @@
 import Arweave from 'arweave/web'
-import { IArticle } from '../types/types';
+import { IArticle, IArticleContent } from '../types/types';
 import sanitize from '../utils/sanitizeHtml';
+import { query as arqlQuery} from '../utils/arql';
+
 
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
@@ -51,22 +53,68 @@ export default class ApiService {
 		}
 	}
 
-	public async getArticleData(id: string, awv: any = arweave) {
-		try {
-			const tx = await awv.transactions.get(id)
-			const data = JSON.parse(
-				decodeURI(
-					tx.get('data', { decode: true, string: true })
-				)
-			)
-			console.log(data)
+	public async getArticlesByTag(tag: string, awv: any = arweave) {
 
-			data.body = sanitize(data.body)
-			return data
+		let query =
+		{
+			op: 'and',
+			expr1: {
+				op: 'equals',
+				expr1: 'App-Name',
+				expr2: prefix
+			},
+			expr2: arqlQuery({
+				[prefix + '-tag']: tag,
+				[prefix + '-tag-0']: tag,
+				[prefix + '-tag-1']: tag,
+				[prefix + '-tag-2']: tag,
+				[prefix + '-tag-3']: tag,
+				[prefix + '-tag-4']: tag,
+				[prefix + '-tag-5']: tag,
+			},'or')
+		}
+
+		try {
+			const res = await awv.api.post(`arql`, query); 
+			return this.createRows(res)
 		}
 		catch (err) {
 			return { err }
 		}
+	}
+
+	public async getArticleData(id: string, awv: any = arweave): Promise<IArticleContent> {
+		const tx = await awv.transactions.get(id)
+		const data = JSON.parse(
+			decodeURI(
+				tx.get('data', { decode: true, string: true })
+			)
+		) as {
+			title: string,
+			body: string,
+			stringBody: string,
+			tagline: string
+		};
+		
+		const contentTagRegex = new RegExp(`^${envProdPrefix}-tag-[0-9]$`, 'i');
+
+		const tags: string[] = [];
+
+		tx.get('tags').forEach((tag: any) => {
+			let key = tag.get('name', { decode: true, string: true }) as string;
+			let value: string = tag.get('value', { decode: true, string: true })
+			
+			if (contentTagRegex.test(key)) {
+				tags.push(value);
+			}
+		});
+
+		data.body = sanitize(data.body)
+
+		return {
+			...data,
+			tags: tags
+		};
 	}
 
 	private async createRows(
@@ -138,7 +186,7 @@ export default class ApiService {
 
 	private addContentTags(tx: any, tags: string[]) {
 		tags.forEach((tag: string, index: number) => {
-			tx.addTag(`${prefix}-tag-${index}`, tag)
+			tx.addTag(`${prefix}-tag`, tag)
 		})
 		return tx
 	}

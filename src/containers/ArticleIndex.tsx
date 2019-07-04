@@ -5,13 +5,14 @@ import './ArticleIndex.css'
 import CachingService from '../services/CachingService';
 import LoadingComponent from '../components/common/LoadingComponent';
 import ErrorComponent from '../components/common/ErrorComonent';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 type State = {
 	list: any[],
 	err: any
 }
 
-class ArticleIndex extends React.Component {
+class ArticleIndex extends React.Component <RouteComponentProps<{tag?: string}>> {
 	state: State
 	api: ApiService
 	cache: CachingService
@@ -28,17 +29,33 @@ class ArticleIndex extends React.Component {
 		}
 	}
 
+	componentDidUpdate(prevProps: any) {
+        if (this.props.location.pathname !== prevProps.location.pathname) {
+            this.getArticles(this.props.match.params.tag);
+        }
+    }
+
 	componentDidMount() {
-		this.getArticles()
+		this.getArticles(this.props.match.params.tag || null);
 	}
 
-	async getArticles() {
-		const cachedDocuments = this.cache.getDocument('index')
+	async getArticles(tag: string|null) {
+
+		this.setState({ list: [] })
+
+		const cacheKey = tag ? `tag-${tag}` : 'index';
+
+		const cachedDocuments = this.cache.getDocument(cacheKey)
+
 		if (cachedDocuments) {
 			this.setState({ list: cachedDocuments })
-		}
-		this.api.getAllArticles().then((articles: any) => {
-			console.log(articles)
+		}		
+		
+		(tag
+			? this.api.getArticlesByTag(tag)
+			: this.api.getAllArticles()
+		)
+		.then((articles: any) => {
 			articles = articles.sort((a: any, b: any) => {
 				return b.unixTime - a.unixTime
 			})
@@ -46,14 +63,19 @@ class ArticleIndex extends React.Component {
 				throw (articles.tx_status.status)
 			}
 			this.setState({ list: articles })
-			this.cache.setDocument('index', articles)
+			this.cache.setDocument(cacheKey, articles)
 		}).catch((err: any) => {
 			this.setState({ err })
 		})
 	}
 
 	render() {
-		const { list, err } = this.state
+		const { list, err } = this.state;
+
+		const exploreTag = (tag: string) => {
+			this.props.history.push(`/explore/${tag}`);
+		};
+
 		return (
 			list.length ?
 				list.map((article: any) => {
@@ -64,6 +86,7 @@ class ArticleIndex extends React.Component {
 						>
 							<ArticleListCard
 								article={article}
+								onTagClick={exploreTag}
 							/>
 						</div>
 					)
@@ -77,5 +100,5 @@ class ArticleIndex extends React.Component {
 	}
 }
 
-export default ArticleIndex
+export default withRouter(ArticleIndex)
 

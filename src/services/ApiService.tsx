@@ -1,7 +1,8 @@
 import Arweave from 'arweave/web'
-import { IArticle } from '../types/types';
+import { IArticle, IArticleContent } from '../types/types';
 import sanitize from '../utils/sanitizeHtml';
 import { query as arqlQuery} from '../utils/arql';
+
 
 const arweave = Arweave.init(
 	{ host: 'arweave.net', port: 443, protocol: 'https' });
@@ -82,22 +83,38 @@ export default class ApiService {
 		}
 	}
 
-	public async getArticleData(id: string, awv: any = arweave) {
-		try {
-			const tx = await awv.transactions.get(id)
-			const data = JSON.parse(
-				decodeURI(
-					tx.get('data', { decode: true, string: true })
-				)
+	public async getArticleData(id: string, awv: any = arweave): Promise<IArticleContent> {
+		const tx = await awv.transactions.get(id)
+		const data = JSON.parse(
+			decodeURI(
+				tx.get('data', { decode: true, string: true })
 			)
-			console.log(data)
+		) as {
+			title: string,
+			body: string,
+			stringBody: string,
+			tagline: string
+		};
+		
+		const contentTagRegex = new RegExp(`^${envProdPrefix}-tag-[0-9]$`, 'i');
 
-			data.body = sanitize(data.body)
-			return data
-		}
-		catch (err) {
-			return { err }
-		}
+		const tags: string[] = [];
+
+		tx.get('tags').forEach((tag: any) => {
+			let key = tag.get('name', { decode: true, string: true }) as string;
+			let value: string = tag.get('value', { decode: true, string: true })
+			
+			if (contentTagRegex.test(key)) {
+				tags.push(value);
+			}
+		});
+
+		data.body = sanitize(data.body)
+
+		return {
+			...data,
+			tags: tags
+		};
 	}
 
 	private async createRows(

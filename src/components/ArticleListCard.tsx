@@ -31,6 +31,9 @@ function ArticleListCard(props: Props) {
                     {title}
                 </Link>
             </h2>
+            <Link to={`/view/${props.article.id}`}>
+                <img src={props.article.image}/>
+            </Link>
             {/* <div className="tags-heading">
                 {tagline}
             </div> */}

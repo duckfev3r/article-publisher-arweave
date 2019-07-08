@@ -157,6 +157,30 @@ export default class ApiService {
 						})
 					}
 
+
+					try {
+						const data = JSON.parse(decodeURI(await tx.get('data', { decode: true, string: true })));
+						const parser = new DOMParser();
+						const dom = parser.parseFromString(data.body, 'text/html');
+
+						const img = dom.querySelector('img')
+
+						if (img) {
+							const src = img.getAttribute('src');
+		
+							if (src.startsWith('data:image')) {
+								tx_row['image'] = src;
+							}
+						}
+
+					} catch (error) {
+						tx_row['image'] = '';
+					} finally{
+						if (!tx_row['image']) {
+							tx_row['image'] = '';
+						}
+					}
+
 					tx_row['id'] = id
 					tx_row['tx_status'] = await awv.transactions.getStatus(id)
 					tx_row['from'] = await awv.wallets.ownerToAddress(tx.owner)

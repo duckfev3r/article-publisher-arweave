@@ -100,3 +100,12 @@
 .list-date {
 	color : rgba(0, 0, 0, 0.6)
 }
+
+.card img{
+	width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+	max-height: 400px;
+	margin: 0 auto;
+    display: block;
+}

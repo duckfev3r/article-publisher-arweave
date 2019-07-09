@@ -3,11 +3,16 @@ html {
 }
 
 body {
-	font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	margin: 0px;
 	background-color: #fdfdfd;
 	overflow-y: scroll;
 	height: 100%;
+	font-weight: 200;
+}
+
+h1,h2,h3,h4,h5{
+	font-family: 'Roboto Slab', serif;
 }
 
 #main {
@@ -56,7 +61,7 @@ body {
 }
 
 .ql-editor>h1, .ql-editor>p {
-	font-family: Georgia, 'Times New Roman', Times, serif
+	/* font-family: Georgia, 'Times New Roman', Times, serif */
 }
 
 .ql-editor>h1 {
@@ -116,7 +121,7 @@ body {
 }
 
 li {
-	font-family: Georgia, 'Times New Roman', Times, serif;
+	/* font-family: Georgia, 'Times New Roman', Times, serif; */
 	font-size: 1.3em;
 	line-height: 1.7em;
 }

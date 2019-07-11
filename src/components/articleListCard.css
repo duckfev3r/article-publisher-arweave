@@ -50,9 +50,7 @@
  .article-list-card>h2 {
 	margin: 20px 0px 30px 0px;
  	font-size: 1.8em !important;
- 	letter-spacing: -1px;
  	font-weight: 600;
- 	line-height: 1.22;
  }
 
  .article-list-card>h3 {
@@ -91,7 +89,6 @@
  }
 
  .tags{
-	/* margin-top: 20px; */
 	overflow: auto;
  }
  .tags .tag {
@@ -100,6 +97,7 @@
 	font-weight: 500;
 	font-size: 14px;
 	display: inline-block;
+	text-decoration: none;
  }
 
  .tags-heading {

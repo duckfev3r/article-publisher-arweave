@@ -8,11 +8,9 @@ import ApiService from '../services/ApiService'
 import '../main.css'
 import CreateArticleStyles from './CreateArticleStyles'
 import CreateArticleButtons from '../components/CreateArticleButtons';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import KeyUploadComponent from '../components/KeyUploadComponent';
 import ArticleForm from '../components/ArticleForm';
-
-import Keystore from '../keystore'
 
 import { IArticleContent, IArticleMeta, IArticle, IInvalidField } from '../types/types';
 import ConfirmSendDialogue from '../components/ConfirmSendDialogue';

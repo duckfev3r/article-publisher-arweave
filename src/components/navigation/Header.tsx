@@ -27,7 +27,6 @@ const Header = ({ navLinks }: Props) => {
                         className="button"
                         variant="text"
                         disableRipple
-                        // color="green"
                     >
                         Post
                     </Button>

@@ -1,5 +1,9 @@
 import { RouteComponentProps } from "react-router-dom";
 
+export type IArweaveTag = string
+export type ArticleTag = string
+export type IWalletAddress = string
+
 export default interface INavLink {
 	link: string
 	title: string
@@ -8,13 +12,17 @@ export default interface INavLink {
 	nav: boolean
 }
 
+export interface IComment {
+	id: string
+	articleId: string
+	address: string
+	content: string
+}
+
 export interface IArticle {
 	meta: IArticleMeta
 	content: IArticleContent
 }
-
-export type IArweaveTag = string
-
 export interface IArticleMeta {
 	tags: ArticleTag[]
 	uniqueId: string
@@ -29,8 +37,6 @@ export interface IArticleContent {
 	tags?:string[]
 }
 
-export type ArticleTag = string
-
 export interface IArticleImg {
 	title: string
 	alt: string
@@ -40,4 +46,10 @@ export interface IArticleImg {
 export interface IInvalidField {
 	title: string
 	body: string
+}
+
+export interface IArticleComment {
+	id: string
+	from: string
+	comment: string
 }

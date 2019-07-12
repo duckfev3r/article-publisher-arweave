@@ -6,7 +6,7 @@
 
  h2, h3, h4, p {
  	color: rgba(0, 0, 0, 0.85);
- 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+ 	/* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif */
  }
 
  .bullet {
@@ -30,6 +30,13 @@
  .article-list-card {
 	 padding: 0px 18px;
 	 margin-bottom: 50px;
+	 margin: 0 auto;
+	 max-width: 750px;
+	 background-color: #fff;
+	 border: 1px solid #eee;
+	 margin: 40px auto;
+	 border-radius: 5px;
+	 padding: 30px 30px 20px 30px;
  }
 
  .article-list-card>h1 {
@@ -41,12 +48,9 @@
  }
 
  .article-list-card>h2 {
-	 /* color: grey; */
-	margin: 10px 0px 10px 0px;
+	margin: 20px 0px 30px 0px;
  	font-size: 1.8em !important;
- 	letter-spacing: -1px;
  	font-weight: 600;
- 	line-height: 1.22;
  }
 
  .article-list-card>h3 {
@@ -55,13 +59,11 @@
  }
 
  .article-list-card>p {
- 	/* padding: 0px 10px 0px 10px !important; */
- 	font-size: 1em;
- 	line-height: 1.5;
- 	font-weight: 400 !important;
- 	color: rgba(0, 0, 0, 0.6);
- 	letter-spacing: -1px;
- 	margin: 15px 0px 15px 0px !important;
+    font-size: 1em;
+    font-weight: 300 !important;
+    color: rgba(0, 0, 0, 0.6);
+    letter-spacing: 0px;
+    margin: 15px 0px 15px 0px !important;
  }
 
  .root {
@@ -72,16 +74,30 @@
 
  .chip {
  	margin: 10px 5px 5px 0px;
- 	/* margin-right: 5px;
-	 margin-bottom: 20px; */
  	padding: 0px !important;
  	border-radius: 4px !important;
- 	/* border: 1px solid grey !important; */
- 	/* font-style: italic; */
+	border: none !important;
+	border-radius: 2px !important;
  }
 
- .chip>span {
- 	color: grey;
+ .about-post{
+	display: flex;
+    flex-direction: row;
+    align-items: stretch;
+	justify-content: space-between;
+	margin-top: 20px;
+ }
+
+ .tags{
+	overflow: auto;
+ }
+ .tags .tag {
+	color: #f85959 !important;
+	padding: 0 10px 5px 0;
+	font-weight: 500;
+	font-size: 14px;
+	display: inline-block;
+	text-decoration: none;
  }
 
  .tags-heading {
@@ -89,6 +105,10 @@
  	font-size: 1.1em;
  	font-weight: 400;
  	/* letter-spacing: 2px; */
+ }
+
+ .votes .clap{
+	margin: 0 0 0 10px;
  }
 
  .article-list-card a {
@@ -99,4 +119,13 @@
 
 .list-date {
 	color : rgba(0, 0, 0, 0.6)
+}
+
+.card img{
+	width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+	max-height: 400px;
+	margin: 0 auto;
+    display: block;
 }

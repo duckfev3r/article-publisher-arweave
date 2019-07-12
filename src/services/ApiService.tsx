@@ -1,7 +1,8 @@
 import Arweave from 'arweave/web'
-import { IArticle, IArticleContent } from '../types/types';
+import { IArticle, IArticleContent, IArticleComment, IComment } from '../types/types';
 import sanitize from '../utils/sanitizeHtml';
 import { query as arqlQuery} from '../utils/arql';
+import Transaction from 'arweave/web/lib/transaction';
 
 
 const arweave = Arweave.init(
@@ -35,6 +36,13 @@ export default class ApiService {
 		} catch (err) {
 			return { err }
 		}
+	}
+
+	public async postComment(comment: IComment, wallet: any, awv: any){
+		let tx = await awv.createTransaction({
+			data: encodeURI(JSON.stringify(comment.content))
+		}, wallet)
+		this.addCommentTags(tx, comment)
 	}
 
 	public async getAllArticles(awv: any = arweave) {
@@ -117,6 +125,43 @@ export default class ApiService {
 		};
 	}
 
+	public async getCommentIds(articleId: string, awv: any = arweave): Promise<string[]> {
+
+		const query = arqlQuery({
+			'App-Name': prefix,
+			[`${prefix}-type`]: 'comment',
+			[`${prefix}-article`]: articleId,
+		},'or');
+
+		const res = await awv.api.post(`arql`, query);
+
+		return res.data || [];
+	}
+
+	public async getComment(commentId: string, awv: any = arweave): Promise<IComment> {
+
+		const tx = await awv.transactions.get(commentId) as Transaction;
+
+		const data = JSON.parse(
+			decodeURI(
+				tx.get('data', { decode: true, string: true })
+			)
+		);
+
+		const articleIdTag = tx.tags.find((tag) => {
+			if (tag.get('name', {decode: true, string: true}) == `${prefix}-article`) {
+				return true;
+			}
+		});
+
+		return {
+			id: commentId,
+			articleId: articleIdTag.get('name', {decode: true, string: true}),
+			address: await awv.wallets.ownerToAddress(tx.owner),
+			content: data
+		}
+	}
+
 	private async createRows(
 		res: any,
 		getData: boolean = false,
@@ -157,8 +202,32 @@ export default class ApiService {
 						})
 					}
 
+
+					try {
+						const data = JSON.parse(decodeURI(await tx.get('data', { decode: true, string: true })));
+						const parser = new DOMParser();
+						const dom = parser.parseFromString(data.body, 'text/html');
+
+						const img = dom.querySelector('img')
+
+						if (img) {
+							const src = img.getAttribute('src');
+		
+							if (src.startsWith('data:image')) {
+								tx_row['image'] = src;
+							}
+						}
+
+					} catch (error) {
+						tx_row['image'] = '';
+					} finally{
+						if (!tx_row['image']) {
+							tx_row['image'] = '';
+						}
+					}
+
 					tx_row['id'] = id
-					tx_row['tx_status'] = await awv.transactions.getStatus(id)
+					tx_row['tx_status'] = 200;//await awv.transactions.getStatus(id)
 					tx_row['from'] = await awv.wallets.ownerToAddress(tx.owner)
 					tx_row['td_fee'] = awv.ar.winstonToAr(tx.reward)
 					tx_row['td_qty'] = awv.ar.winstonToAr(tx.quantity)
@@ -177,10 +246,19 @@ export default class ApiService {
 		tx.addTag(`${prefix}-synopsis`, encodeURI(this.createSynopsis(article.content.stringBody)))
 		tx.addTag('App-Name', `${prefix}`)
 		tx.addTag(`${prefix}-id`, this.randomString())
+		tx.addTag(`${prefix}-type`, 'article')
 		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))
 		tx.addTag(`${prefix}-tagline`, encodeURI(article.content.tagline))
 		tx.addTag('App-Version', '0.0.1')
 		tx.addTag('Unix-Time', this.getTime())
+		return tx
+	}
+
+	private addCommentTags(tx: any, comment: IComment) {
+		tx.addTag('App-Name', `${prefix}`)
+		tx.addTag(`${prefix}-type`, 'comment')
+		tx.addTag(`${prefix}-article`, comment.articleId)
+		tx.addTag('App-Version', '0.0.1')
 		return tx
 	}
 

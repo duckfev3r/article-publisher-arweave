@@ -242,6 +242,7 @@ export default class ApiService {
 		return tx_rows
 	}
 
+
 	private addAppMetaTags(tx: any, article: IArticle) {
 		tx.addTag(`${prefix}-synopsis`, encodeURI(this.createSynopsis(article.content.stringBody)))
 		tx.addTag('App-Name', `${prefix}`)
@@ -250,6 +251,7 @@ export default class ApiService {
 		tx.addTag(`${prefix}-title`, encodeURI(article.content.title))
 		tx.addTag(`${prefix}-tagline`, encodeURI(article.content.tagline))
 		tx.addTag('App-Version', '0.0.1')
+		tx.addTag("_apollo.app", "862270");
 		tx.addTag('Unix-Time', this.getTime())
 		return tx
 	}
